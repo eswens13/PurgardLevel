@@ -10,6 +10,7 @@
 		C63268ED1CD7D78400490179 /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63268EB1CD7D78400490179 /* BatteryView.swift */; };
 		C63268EE1CD7D78400490179 /* TemperatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63268EC1CD7D78400490179 /* TemperatureView.swift */; };
 		C67D32941D34A54F00377642 /* PurgardStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67D32931D34A54F00377642 /* PurgardStatsView.swift */; };
+		C680316C1D35E66C00DE2522 /* PurgardLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C680316B1D35E66C00DE2522 /* PurgardLevelView.swift */; };
 		C68E2A151C9BBFD000A24BB1 /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E2A141C9BBFD000A24BB1 /* DeviceTableViewCell.swift */; };
 		C68E2A171C9BC5DD00A24BB1 /* DeviceListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E2A161C9BC5DD00A24BB1 /* DeviceListTableViewController.swift */; };
 		C6AD6AE71C9CB261004EBD1F /* BLEController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AD6AE61C9CB261004EBD1F /* BLEController.swift */; };
@@ -44,6 +45,7 @@
 		C63268EB1CD7D78400490179 /* BatteryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BatteryView.swift; path = "../../Custom View Test/Custom View Test/BatteryView.swift"; sourceTree = "<group>"; };
 		C63268EC1CD7D78400490179 /* TemperatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemperatureView.swift; path = "../../Custom View Test/Custom View Test/TemperatureView.swift"; sourceTree = "<group>"; };
 		C67D32931D34A54F00377642 /* PurgardStatsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurgardStatsView.swift; sourceTree = "<group>"; };
+		C680316B1D35E66C00DE2522 /* PurgardLevelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurgardLevelView.swift; sourceTree = "<group>"; };
 		C68E2A141C9BBFD000A24BB1 /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
 		C68E2A161C9BC5DD00A24BB1 /* DeviceListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceListTableViewController.swift; sourceTree = "<group>"; };
 		C6AD6AE61C9CB261004EBD1F /* BLEController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				C68E2A161C9BC5DD00A24BB1 /* DeviceListTableViewController.swift */,
 				C6AD6AE61C9CB261004EBD1F /* BLEController.swift */,
 				C67D32931D34A54F00377642 /* PurgardStatsView.swift */,
+				C680316B1D35E66C00DE2522 /* PurgardLevelView.swift */,
 			);
 			path = "Purgard Level";
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C67D32941D34A54F00377642 /* PurgardStatsView.swift in Sources */,
+				C680316C1D35E66C00DE2522 /* PurgardLevelView.swift in Sources */,
 				C63268ED1CD7D78400490179 /* BatteryView.swift in Sources */,
 				C63268EE1CD7D78400490179 /* TemperatureView.swift in Sources */,
 				C6D247CC1C8FF24300A9BC0C /* ViewController.swift in Sources */,

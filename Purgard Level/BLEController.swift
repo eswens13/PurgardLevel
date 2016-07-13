@@ -99,7 +99,7 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
         else {
             print("Disconnected from \(peripheral.name)")
-            self.deviceViewController?.connectionLabel.text = "Disconnected"
+            self.deviceViewController?.statsView.setConnectionStatus("Disconnected")
             self.currentDevice = nil
         }
     }
@@ -173,10 +173,10 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
         
         if (characteristic.isNotifying) {
-            deviceViewController?.connectionLabel.text = "Connected"
+            deviceViewController?.statsView.setConnectionStatus("Connected")
         }
         else {
-            deviceViewController?.connectionLabel.text = "Disconnected"
+            deviceViewController?.statsView.setConnectionStatus("Disconnected")
         }
         
     }

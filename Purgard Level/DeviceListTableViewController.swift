@@ -82,7 +82,7 @@ class DeviceListTableViewController: UITableViewController, UIGestureRecognizerD
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        
         if (segue.identifier == "toLevelSegue") {
             let cellIndexPath = self.tableView.indexPathForCell(sender as! DeviceTableViewCell)
             
@@ -96,7 +96,7 @@ class DeviceListTableViewController: UITableViewController, UIGestureRecognizerD
             // Add a back button to the navigation bar
             let backItem = UIBarButtonItem(title: "Devices", style: .Plain, target: vc, action: nil)
             navigationItem.backBarButtonItem = backItem
-                    
+            
         }
         
     }

@@ -11,36 +11,33 @@ import CoreBluetooth
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var levelLabel: UILabel!
-    @IBOutlet weak var connectionLabel: UILabel!
-    
     var bleController: BLEController?
+    var levelView: PurgardLevelView!
     var batteryView: BatteryView!
     var temperatureView: TemperatureView!
+    var statsView: PurgardStatsView!
     var device: CBPeripheral?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         self.bleController?.connectToDevice(device!)
         self.setControlProperties()
-
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if self.isLandscape() {
-            // Layout in a row of four
+            self.layoutAsLandscape()
         }
         else {
-            // Layout in two rows of two
+            self.layoutAsPortrait()
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        print("Received memory warning")
     }
     
     func isLandscape() -> Bool {
@@ -50,6 +47,83 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         else {
             return false
         }
+    }
+    
+    // Lays out the views in two rows of two.
+    func layoutAsPortrait() {
+        let width = self.view.bounds.width
+        let height = self.view.bounds.height
+        
+        // Layout level view
+        let levelRect = CGRect(x: width / 2.0,
+                               y: 0,
+                               width: width / 2.0,
+                               height: height / 2.0)
+        self.levelView.frame = levelRect
+        self.levelView.layoutSubviews()
+        
+        // Layout battery view
+        let batteryRect = CGRect(x: 0,
+                                 y: height / 2.0,
+                                 width: width / 2.0,
+                                 height: height / 2.0)
+        self.batteryView.frame = batteryRect
+        self.batteryView.layoutSubviews()
+        
+        // Layout temperature view
+        let tempRect = CGRect(x: width / 2.0,
+                              y: height / 2.0,
+                              width: width / 2.0,
+                              height: height / 2.0)
+        self.temperatureView.frame = tempRect
+        self.temperatureView.layoutSubviews()
+        
+        // Layout stats view
+        let statsRect = CGRect(x: 0,
+                               y: 0,
+                               width: width / 2.0,
+                               height: height / 2.0)
+        self.statsView.frame = statsRect
+        self.statsView.layoutSubviews()
+    
+    }
+    
+    // Lays out the views in a row of four.
+    func layoutAsLandscape() {
+        let width = self.view.bounds.width
+        let height = self.view.bounds.height
+        
+        // Layout stats view
+        let statsRect = CGRect(x: 0,
+                               y: 0,
+                               width: width / 4.0,
+                               height: height)
+        self.statsView.frame = statsRect
+        self.statsView.layoutSubviews()
+        
+        // Layout level view
+        let levelRect = CGRect(x: width / 4.0,
+                               y: 0,
+                               width: width / 4.0,
+                               height: height)
+        self.levelView.frame = levelRect
+        self.levelView.layoutSubviews()
+        
+        // Layout battery view
+        let batteryRect = CGRect(x: 2.0 * width / 4.0,
+                                 y: 0,
+                                 width: width / 4.0,
+                                 height: height)
+        self.batteryView.frame = batteryRect
+        self.batteryView.layoutSubviews()
+        
+        // Layout temperature view
+        let tempRect = CGRect(x: 3.0 * width / 4.0,
+                              y: 0,
+                              width: width / 4.0,
+                              height: height)
+        self.temperatureView.frame = tempRect
+        self.temperatureView.layoutSubviews()
     }
 
     func setControlProperties() {
@@ -65,10 +139,23 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         // it allows us to override AutoLayout for whatever component it is
         // called on
         //titleLabel.translatesAutoresizingMaskIntoConstraints = true
+        
+        let statsRect = CGRect(x: 0, y: 0, width: 200, height: 200)
+        self.statsView = PurgardStatsView(frame: statsRect)
+        self.statsView.translatesAutoresizingMaskIntoConstraints = true
+        self.statsView.backgroundColor = UIColor.clearColor()
+        self.statsView.setDeviceName("Device: \(self.navigationItem.title!)")
+        self.view.addSubview(self.statsView)
+        
+        let levelRect = CGRect(x: 0, y: 0, width: 200, height: 200)
+        self.levelView = PurgardLevelView(frame: levelRect)
+        self.levelView.translatesAutoresizingMaskIntoConstraints = true
+        self.levelView.backgroundColor = UIColor.clearColor()
+        self.view.addSubview(self.levelView)
  
         // Set properties for progress view. Default height of the progress bar 
         // is 2.0 so we scale accordingly
-        progressView.translatesAutoresizingMaskIntoConstraints = true
+        /*progressView.translatesAutoresizingMaskIntoConstraints = true
         let navBarHeight = self.navigationController?.navigationBar.frame.height
         let progressViewRect = CGRect(x: 0, y: 0,
                                       width: (2.0 * screenHeight / 3.0) - navBarHeight!,
@@ -80,16 +167,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         progressView.setProgress(0.0, animated: false)
         progressView.transform = CGAffineTransformMakeRotation(CGFloat(3.0 * M_PI / 2.0))
         progressView.transform = CGAffineTransformScale(progressView.transform,
-            1.0, screenWidth / 3.0)
-        
-        // Set level label
-        levelLabel.translatesAutoresizingMaskIntoConstraints = true
-        levelLabel.font = levelLabel.font.fontWithSize(24)
-        levelLabel.center = CGPointMake(screenWidth / 2.0, screenHeight / 3.0)
-        
-        // Set connection label
-        connectionLabel.translatesAutoresizingMaskIntoConstraints = true
-        connectionLabel.center = CGPointMake(centerX, screenHeight - 20)
+            1.0, screenWidth / 3.0)*/
         
         // Add the battery view
         let battRect = CGRect(x:0, y:0,
@@ -97,7 +175,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                           height: screenHeight / 3.0)
         self.batteryView = BatteryView(frame: battRect.insetBy(dx: 0, dy: 20))
         self.batteryView.translatesAutoresizingMaskIntoConstraints = true
-        self.batteryView.center = CGPointMake(screenWidth / 3.0, 5.0 * screenHeight / 6.0)
         self.batteryView.backgroundColor = UIColor.clearColor()
         self.batteryView.updateLevel(0.0)
         self.view.addSubview(self.batteryView)
@@ -108,11 +185,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                               height: screenHeight / 3.0)
         self.temperatureView = TemperatureView(frame: tempRect.insetBy(dx: 20, dy: 20))
         self.temperatureView.translatesAutoresizingMaskIntoConstraints = true
-        self.temperatureView.center = CGPointMake(2.0 * screenWidth / 3.0, 5.0 * screenHeight / 6.0)
         self.temperatureView.backgroundColor = UIColor.clearColor()
         self.temperatureView.updateLevel(0)
         self.view.addSubview(self.temperatureView)
         
+        self.view.layoutSubviews()
     }
     
     /// TESTING METHOD
@@ -145,20 +222,21 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func updateProgress(progress: Int) {
-        let myFloat:Float = Float(progress) / 100.0
-        progressView.setProgress(myFloat, animated: true)
-        levelLabel.text = "\(progress)%"
+        self.levelView.updateProgress(progress)
+        self.statsView.setLevel("Purgard Level: \(progress) %")
     }
     
     func updateVoltage(voltage: Int) {
+        // We are being passed voltage in mV (max of 4V)
         let volts = Float(voltage)
-        let voltProgress = Float(volts / 100.0)
+        let voltProgress = Float(volts / 4000.0)
         self.batteryView.updateLevel(CGFloat(voltProgress))
-        //voltageLabel.text = "Voltage:  \(volts) V"
+        self.statsView.setVoltage("Voltage: \(volts) mV")
     }
     
     func updateTemperature(temperature: Int) {
         self.temperatureView.updateLevel(CGFloat(temperature))
+        self.statsView.setTemperature("Temperature: \(temperature) \u{00B0}C")
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
