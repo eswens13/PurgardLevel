@@ -1,0 +1,548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C63268ED1CD7D78400490179 /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63268EB1CD7D78400490179 /* BatteryView.swift */; };
+		C63268EE1CD7D78400490179 /* TemperatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63268EC1CD7D78400490179 /* TemperatureView.swift */; };
+		C67D32941D34A54F00377642 /* PurgardStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67D32931D34A54F00377642 /* PurgardStatsView.swift */; };
+		C68E2A151C9BBFD000A24BB1 /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E2A141C9BBFD000A24BB1 /* DeviceTableViewCell.swift */; };
+		C68E2A171C9BC5DD00A24BB1 /* DeviceListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E2A161C9BC5DD00A24BB1 /* DeviceListTableViewController.swift */; };
+		C6AD6AE71C9CB261004EBD1F /* BLEController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AD6AE61C9CB261004EBD1F /* BLEController.swift */; };
+		C6D247CA1C8FF24300A9BC0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D247C91C8FF24300A9BC0C /* AppDelegate.swift */; };
+		C6D247CC1C8FF24300A9BC0C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D247CB1C8FF24300A9BC0C /* ViewController.swift */; };
+		C6D247CF1C8FF24300A9BC0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6D247CD1C8FF24300A9BC0C /* Main.storyboard */; };
+		C6D247D11C8FF24300A9BC0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6D247D01C8FF24300A9BC0C /* Assets.xcassets */; };
+		C6D247D41C8FF24300A9BC0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6D247D21C8FF24300A9BC0C /* LaunchScreen.storyboard */; };
+		C6D247DF1C8FF24400A9BC0C /* Purgard_LevelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D247DE1C8FF24300A9BC0C /* Purgard_LevelTests.swift */; };
+		C6D247EA1C8FF24400A9BC0C /* Purgard_LevelUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D247E91C8FF24400A9BC0C /* Purgard_LevelUITests.swift */; };
+		C6D247F81C8FF7A700A9BC0C /* PurgardLevelProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D247F71C8FF7A700A9BC0C /* PurgardLevelProgressBar.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C6D247DB1C8FF24300A9BC0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C6D247BE1C8FF24300A9BC0C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C6D247C51C8FF24300A9BC0C;
+			remoteInfo = "Purgard Level";
+		};
+		C6D247E61C8FF24400A9BC0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C6D247BE1C8FF24300A9BC0C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C6D247C51C8FF24300A9BC0C;
+			remoteInfo = "Purgard Level";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C63268EB1CD7D78400490179 /* BatteryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BatteryView.swift; path = "../../Custom View Test/Custom View Test/BatteryView.swift"; sourceTree = "<group>"; };
+		C63268EC1CD7D78400490179 /* TemperatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemperatureView.swift; path = "../../Custom View Test/Custom View Test/TemperatureView.swift"; sourceTree = "<group>"; };
+		C67D32931D34A54F00377642 /* PurgardStatsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurgardStatsView.swift; sourceTree = "<group>"; };
+		C68E2A141C9BBFD000A24BB1 /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
+		C68E2A161C9BC5DD00A24BB1 /* DeviceListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceListTableViewController.swift; sourceTree = "<group>"; };
+		C6AD6AE61C9CB261004EBD1F /* BLEController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEController.swift; sourceTree = "<group>"; };
+		C6D247C61C8FF24300A9BC0C /* Purgard Level.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Purgard Level.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6D247C91C8FF24300A9BC0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C6D247CB1C8FF24300A9BC0C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C6D247CE1C8FF24300A9BC0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C6D247D01C8FF24300A9BC0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C6D247D31C8FF24300A9BC0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C6D247D51C8FF24300A9BC0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C6D247DA1C8FF24300A9BC0C /* Purgard LevelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Purgard LevelTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6D247DE1C8FF24300A9BC0C /* Purgard_LevelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purgard_LevelTests.swift; sourceTree = "<group>"; };
+		C6D247E01C8FF24400A9BC0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C6D247E51C8FF24400A9BC0C /* Purgard LevelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Purgard LevelUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6D247E91C8FF24400A9BC0C /* Purgard_LevelUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purgard_LevelUITests.swift; sourceTree = "<group>"; };
+		C6D247EB1C8FF24400A9BC0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C6D247F71C8FF7A700A9BC0C /* PurgardLevelProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurgardLevelProgressBar.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C6D247C31C8FF24300A9BC0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6D247D71C8FF24300A9BC0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6D247E21C8FF24400A9BC0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C6D247BD1C8FF24300A9BC0C = {
+			isa = PBXGroup;
+			children = (
+				C6D247C81C8FF24300A9BC0C /* Purgard Level */,
+				C6D247DD1C8FF24300A9BC0C /* Purgard LevelTests */,
+				C6D247E81C8FF24400A9BC0C /* Purgard LevelUITests */,
+				C6D247C71C8FF24300A9BC0C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C6D247C71C8FF24300A9BC0C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C6D247C61C8FF24300A9BC0C /* Purgard Level.app */,
+				C6D247DA1C8FF24300A9BC0C /* Purgard LevelTests.xctest */,
+				C6D247E51C8FF24400A9BC0C /* Purgard LevelUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6D247C81C8FF24300A9BC0C /* Purgard Level */ = {
+			isa = PBXGroup;
+			children = (
+				C63268EB1CD7D78400490179 /* BatteryView.swift */,
+				C63268EC1CD7D78400490179 /* TemperatureView.swift */,
+				C6D247C91C8FF24300A9BC0C /* AppDelegate.swift */,
+				C6D247CB1C8FF24300A9BC0C /* ViewController.swift */,
+				C6D247CD1C8FF24300A9BC0C /* Main.storyboard */,
+				C6D247D01C8FF24300A9BC0C /* Assets.xcassets */,
+				C6D247D21C8FF24300A9BC0C /* LaunchScreen.storyboard */,
+				C6D247D51C8FF24300A9BC0C /* Info.plist */,
+				C6D247F71C8FF7A700A9BC0C /* PurgardLevelProgressBar.swift */,
+				C68E2A141C9BBFD000A24BB1 /* DeviceTableViewCell.swift */,
+				C68E2A161C9BC5DD00A24BB1 /* DeviceListTableViewController.swift */,
+				C6AD6AE61C9CB261004EBD1F /* BLEController.swift */,
+				C67D32931D34A54F00377642 /* PurgardStatsView.swift */,
+			);
+			path = "Purgard Level";
+			sourceTree = "<group>";
+		};
+		C6D247DD1C8FF24300A9BC0C /* Purgard LevelTests */ = {
+			isa = PBXGroup;
+			children = (
+				C6D247DE1C8FF24300A9BC0C /* Purgard_LevelTests.swift */,
+				C6D247E01C8FF24400A9BC0C /* Info.plist */,
+			);
+			path = "Purgard LevelTests";
+			sourceTree = "<group>";
+		};
+		C6D247E81C8FF24400A9BC0C /* Purgard LevelUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C6D247E91C8FF24400A9BC0C /* Purgard_LevelUITests.swift */,
+				C6D247EB1C8FF24400A9BC0C /* Info.plist */,
+			);
+			path = "Purgard LevelUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C6D247C51C8FF24300A9BC0C /* Purgard Level */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C6D247EE1C8FF24400A9BC0C /* Build configuration list for PBXNativeTarget "Purgard Level" */;
+			buildPhases = (
+				C6D247C21C8FF24300A9BC0C /* Sources */,
+				C6D247C31C8FF24300A9BC0C /* Frameworks */,
+				C6D247C41C8FF24300A9BC0C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Purgard Level";
+			productName = "Purgard Level";
+			productReference = C6D247C61C8FF24300A9BC0C /* Purgard Level.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C6D247D91C8FF24300A9BC0C /* Purgard LevelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C6D247F11C8FF24400A9BC0C /* Build configuration list for PBXNativeTarget "Purgard LevelTests" */;
+			buildPhases = (
+				C6D247D61C8FF24300A9BC0C /* Sources */,
+				C6D247D71C8FF24300A9BC0C /* Frameworks */,
+				C6D247D81C8FF24300A9BC0C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C6D247DC1C8FF24300A9BC0C /* PBXTargetDependency */,
+			);
+			name = "Purgard LevelTests";
+			productName = "Purgard LevelTests";
+			productReference = C6D247DA1C8FF24300A9BC0C /* Purgard LevelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C6D247E41C8FF24400A9BC0C /* Purgard LevelUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C6D247F41C8FF24400A9BC0C /* Build configuration list for PBXNativeTarget "Purgard LevelUITests" */;
+			buildPhases = (
+				C6D247E11C8FF24400A9BC0C /* Sources */,
+				C6D247E21C8FF24400A9BC0C /* Frameworks */,
+				C6D247E31C8FF24400A9BC0C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C6D247E71C8FF24400A9BC0C /* PBXTargetDependency */,
+			);
+			name = "Purgard LevelUITests";
+			productName = "Purgard LevelUITests";
+			productReference = C6D247E51C8FF24400A9BC0C /* Purgard LevelUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C6D247BE1C8FF24300A9BC0C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = ErikSwenson;
+				TargetAttributes = {
+					C6D247C51C8FF24300A9BC0C = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 5ZQ6T3UT55;
+					};
+					C6D247D91C8FF24300A9BC0C = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = C6D247C51C8FF24300A9BC0C;
+					};
+					C6D247E41C8FF24400A9BC0C = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = C6D247C51C8FF24300A9BC0C;
+					};
+				};
+			};
+			buildConfigurationList = C6D247C11C8FF24300A9BC0C /* Build configuration list for PBXProject "Purgard Level" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C6D247BD1C8FF24300A9BC0C;
+			productRefGroup = C6D247C71C8FF24300A9BC0C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C6D247C51C8FF24300A9BC0C /* Purgard Level */,
+				C6D247D91C8FF24300A9BC0C /* Purgard LevelTests */,
+				C6D247E41C8FF24400A9BC0C /* Purgard LevelUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C6D247C41C8FF24300A9BC0C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6D247D41C8FF24300A9BC0C /* LaunchScreen.storyboard in Resources */,
+				C6D247D11C8FF24300A9BC0C /* Assets.xcassets in Resources */,
+				C6D247CF1C8FF24300A9BC0C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6D247D81C8FF24300A9BC0C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6D247E31C8FF24400A9BC0C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C6D247C21C8FF24300A9BC0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C67D32941D34A54F00377642 /* PurgardStatsView.swift in Sources */,
+				C63268ED1CD7D78400490179 /* BatteryView.swift in Sources */,
+				C63268EE1CD7D78400490179 /* TemperatureView.swift in Sources */,
+				C6D247CC1C8FF24300A9BC0C /* ViewController.swift in Sources */,
+				C6D247CA1C8FF24300A9BC0C /* AppDelegate.swift in Sources */,
+				C6D247F81C8FF7A700A9BC0C /* PurgardLevelProgressBar.swift in Sources */,
+				C68E2A151C9BBFD000A24BB1 /* DeviceTableViewCell.swift in Sources */,
+				C68E2A171C9BC5DD00A24BB1 /* DeviceListTableViewController.swift in Sources */,
+				C6AD6AE71C9CB261004EBD1F /* BLEController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6D247D61C8FF24300A9BC0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6D247DF1C8FF24400A9BC0C /* Purgard_LevelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6D247E11C8FF24400A9BC0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6D247EA1C8FF24400A9BC0C /* Purgard_LevelUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C6D247DC1C8FF24300A9BC0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C6D247C51C8FF24300A9BC0C /* Purgard Level */;
+			targetProxy = C6D247DB1C8FF24300A9BC0C /* PBXContainerItemProxy */;
+		};
+		C6D247E71C8FF24400A9BC0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C6D247C51C8FF24300A9BC0C /* Purgard Level */;
+			targetProxy = C6D247E61C8FF24400A9BC0C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C6D247CD1C8FF24300A9BC0C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C6D247CE1C8FF24300A9BC0C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C6D247D21C8FF24300A9BC0C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C6D247D31C8FF24300A9BC0C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C6D247EC1C8FF24400A9BC0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C6D247ED1C8FF24400A9BC0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C6D247EF1C8FF24400A9BC0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Purgard Level/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swenson.Purgard-Level";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				"TEST_HOST[sdk=iphoneos*]" = "";
+			};
+			name = Debug;
+		};
+		C6D247F01C8FF24400A9BC0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Purgard Level/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swenson.Purgard-Level";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C6D247F21C8FF24400A9BC0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Purgard LevelTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swenson.Purgard-LevelTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Purgard Level.app/Purgard Level";
+			};
+			name = Debug;
+		};
+		C6D247F31C8FF24400A9BC0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Purgard LevelTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swenson.Purgard-LevelTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Purgard Level.app/Purgard Level";
+			};
+			name = Release;
+		};
+		C6D247F51C8FF24400A9BC0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Purgard LevelUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swenson.Purgard-LevelUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Purgard Level";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		C6D247F61C8FF24400A9BC0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Purgard LevelUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swenson.Purgard-LevelUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Purgard Level";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C6D247C11C8FF24300A9BC0C /* Build configuration list for PBXProject "Purgard Level" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6D247EC1C8FF24400A9BC0C /* Debug */,
+				C6D247ED1C8FF24400A9BC0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C6D247EE1C8FF24400A9BC0C /* Build configuration list for PBXNativeTarget "Purgard Level" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6D247EF1C8FF24400A9BC0C /* Debug */,
+				C6D247F01C8FF24400A9BC0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C6D247F11C8FF24400A9BC0C /* Build configuration list for PBXNativeTarget "Purgard LevelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6D247F21C8FF24400A9BC0C /* Debug */,
+				C6D247F31C8FF24400A9BC0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C6D247F41C8FF24400A9BC0C /* Build configuration list for PBXNativeTarget "Purgard LevelUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6D247F51C8FF24400A9BC0C /* Debug */,
+				C6D247F61C8FF24400A9BC0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C6D247BE1C8FF24300A9BC0C /* Project object */;
+}
