@@ -236,7 +236,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func updateTemperature(temperature: Int) {
         self.temperatureView.updateLevel(CGFloat(temperature))
-        self.statsView.setTemperature("Temperature: \(temperature) \u{00B0}C")
+        let fahrTemp = ((9.0 / 5.0) * Double(temperature)) + 32.0
+        self.statsView.setTemperature("Temperature: \(Int(fahrTemp)) \u{00B0}F")
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
