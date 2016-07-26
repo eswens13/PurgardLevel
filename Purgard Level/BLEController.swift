@@ -83,7 +83,6 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(central: CBCentralManager,
                         didConnectPeripheral peripheral: CBPeripheral) {
         
-        print("Connected to \(peripheral.name!)")
         self.currentDevice = peripheral
         self.currentDevice!.delegate = self
         
@@ -98,7 +97,6 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             print("Error disconnecting from device")
         }
         else {
-            print("Disconnected from \(peripheral.name)")
             self.deviceViewController?.statsView.setConnectionStatus("Disconnected")
             self.currentDevice = nil
         }
@@ -253,7 +251,6 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if (currentDevice == nil) {
             print("Current device null")
         }
-        print("In disconnectFromCurrentDevice()")
         let characteristic:CBCharacteristic = (currentDevice?.services![0].characteristics![0])!
         currentDevice!.setNotifyValue(false, forCharacteristic: characteristic)
         self.centralManager!.cancelPeripheralConnection(self.currentDevice!)

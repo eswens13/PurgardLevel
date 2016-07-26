@@ -26,8 +26,6 @@ class PurgardStatsView: UIView {
         
         self.labelHeight = frame.height / 5.0
         self.labelWidth = frame.width
-        print("Label height: \(self.labelHeight)")
-        print("Label width: \(self.labelWidth)")
         
         let deviceNameRect = CGRect(x: 0,
                                     y: 0,

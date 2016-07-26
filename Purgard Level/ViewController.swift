@@ -51,12 +51,19 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // Lays out the views in two rows of two.
     func layoutAsPortrait() {
+        var navbarHeight:CGFloat
+        if (self.navigationController != nil) {
+            navbarHeight = self.navigationController!.navigationBar.frame.height
+        }
+        else {
+            navbarHeight = 0
+        }
         let width = self.view.bounds.width
-        let height = self.view.bounds.height
+        let height = self.view.bounds.height - navbarHeight
         
         // Layout level view
         let levelRect = CGRect(x: width / 2.0,
-                               y: 0,
+                               y: navbarHeight,
                                width: width / 2.0,
                                height: height / 2.0)
         self.levelView.frame = levelRect
@@ -64,7 +71,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Layout battery view
         let batteryRect = CGRect(x: 0,
-                                 y: height / 2.0,
+                                 y: (height / 2.0) + navbarHeight,
                                  width: width / 2.0,
                                  height: height / 2.0)
         self.batteryView.frame = batteryRect
@@ -72,7 +79,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Layout temperature view
         let tempRect = CGRect(x: width / 2.0,
-                              y: height / 2.0,
+                              y: (height / 2.0) + navbarHeight,
                               width: width / 2.0,
                               height: height / 2.0)
         self.temperatureView.frame = tempRect
@@ -80,7 +87,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Layout stats view
         let statsRect = CGRect(x: 0,
-                               y: 0,
+                               y: navbarHeight,
                                width: width / 2.0,
                                height: height / 2.0)
         self.statsView.frame = statsRect
@@ -90,12 +97,19 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // Lays out the views in a row of four.
     func layoutAsLandscape() {
+        var navbarHeight: CGFloat
+        if (self.navigationController != nil) {
+            navbarHeight = self.navigationController!.navigationBar.frame.height
+        }
+        else {
+            navbarHeight = 0
+        }
         let width = self.view.bounds.width
-        let height = self.view.bounds.height
+        let height = self.view.bounds.height - navbarHeight
         
         // Layout stats view
         let statsRect = CGRect(x: 0,
-                               y: 0,
+                               y: navbarHeight,
                                width: width / 4.0,
                                height: height)
         self.statsView.frame = statsRect
@@ -103,7 +117,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Layout level view
         let levelRect = CGRect(x: width / 4.0,
-                               y: 0,
+                               y: navbarHeight,
                                width: width / 4.0,
                                height: height)
         self.levelView.frame = levelRect
@@ -111,7 +125,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Layout battery view
         let batteryRect = CGRect(x: 2.0 * width / 4.0,
-                                 y: 0,
+                                 y: navbarHeight,
                                  width: width / 4.0,
                                  height: height)
         self.batteryView.frame = batteryRect
@@ -119,7 +133,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Layout temperature view
         let tempRect = CGRect(x: 3.0 * width / 4.0,
-                              y: 0,
+                              y: navbarHeight,
                               width: width / 4.0,
                               height: height)
         self.temperatureView.frame = tempRect
@@ -176,7 +190,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         self.batteryView = BatteryView(frame: battRect.insetBy(dx: 0, dy: 20))
         self.batteryView.translatesAutoresizingMaskIntoConstraints = true
         self.batteryView.backgroundColor = UIColor.clearColor()
-        self.batteryView.updateLevel(0.0)
+        self.batteryView.updateLevel(0)
         self.view.addSubview(self.batteryView)
         
         // Add the temperature view
@@ -222,22 +236,31 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func updateProgress(progress: Int) {
-        self.levelView.updateProgress(progress)
-        self.statsView.setLevel("Purgard Level: \(progress) %")
+        if (progress > 100) {
+            self.levelView.updateProgress(100)
+            self.statsView.setLevel("Level: 100 %")
+        }
+        else {
+            self.levelView.updateProgress(progress)
+            self.statsView.setLevel("Level: \(progress) %")
+        }
     }
     
     func updateVoltage(voltage: Int) {
-        // We are being passed voltage in mV (max of 4V)
-        let volts = Float(voltage)
-        let voltProgress = Float(volts / 4000.0)
-        self.batteryView.updateLevel(CGFloat(voltProgress))
-        self.statsView.setVoltage("Voltage: \(volts) mV")
+        if (voltage > 100) {
+            self.batteryView.updateLevel(100)
+            self.statsView.setVoltage("Batt: 100 %")
+        }
+        else {
+            self.batteryView.updateLevel(voltage)
+            self.statsView.setVoltage("Batt: \(voltage) %")
+        }
     }
     
     func updateTemperature(temperature: Int) {
         self.temperatureView.updateLevel(CGFloat(temperature))
         let fahrTemp = ((9.0 / 5.0) * Double(temperature)) + 32.0
-        self.statsView.setTemperature("Temperature: \(Int(fahrTemp)) \u{00B0}F")
+        self.statsView.setTemperature("Temp: \(Int(fahrTemp)) \u{00B0}F")
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
