@@ -52,43 +52,43 @@ class PurgardStatsView: UIView {
         self.deviceNameLabel = UILabel(frame: deviceNameRect)
         self.deviceNameLabel?.font =
             UIFont(name: "HelveticaNeue", size: CGFloat(20))
-        self.deviceNameLabel?.textAlignment = .Center
-        self.deviceNameLabel?.textColor = UIColor.blackColor()
+        self.deviceNameLabel?.textAlignment = .center
+        self.deviceNameLabel?.textColor = UIColor.black
         
         self.connectionStatusLabel?
             .translatesAutoresizingMaskIntoConstraints = true
         self.connectionStatusLabel = UILabel(frame: connectionStatusRect)
         self.connectionStatusLabel?.font =
             UIFont(name: "HelveticaNeue", size: CGFloat(20))
-        self.connectionStatusLabel?.textAlignment = .Center
-        self.connectionStatusLabel?.textColor = UIColor.blackColor()
+        self.connectionStatusLabel?.textAlignment = .center
+        self.connectionStatusLabel?.textColor = UIColor.black
         
         self.levelLabel?.translatesAutoresizingMaskIntoConstraints = true
         self.levelLabel = UILabel(frame: levelRect)
         self.levelLabel?.font = UIFont(name: "HelveticaNeue", size: CGFloat(20))
-        self.levelLabel?.textAlignment = .Center
-        self.levelLabel?.textColor = UIColor.blackColor()
+        self.levelLabel?.textAlignment = .center
+        self.levelLabel?.textColor = UIColor.black
         
         self.batteryLabel?.translatesAutoresizingMaskIntoConstraints = true
         self.batteryLabel = UILabel(frame: batteryRect)
         self.batteryLabel?.font =
             UIFont(name: "HelveticaNeue", size: CGFloat(20))
-        self.batteryLabel?.textAlignment = .Center
-        self.batteryLabel?.textColor = UIColor.blackColor()
+        self.batteryLabel?.textAlignment = .center
+        self.batteryLabel?.textColor = UIColor.black
         
         self.temperatureLabel?.translatesAutoresizingMaskIntoConstraints = true
         self.temperatureLabel = UILabel(frame: temperatureRect)
         self.temperatureLabel?.font =
             UIFont(name: "HelveticaNeue", size: CGFloat(20))
-        self.temperatureLabel?.textAlignment = .Center
-        self.temperatureLabel?.textColor = UIColor.blackColor()
+        self.temperatureLabel?.textAlignment = .center
+        self.temperatureLabel?.textColor = UIColor.black
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         // Remove old subviews
         for v in self.subviews {
             v.removeFromSuperview()
@@ -97,7 +97,7 @@ class PurgardStatsView: UIView {
         self.layoutRectangles(rect)
     }
     
-    func layoutRectangles(rect: CGRect) {
+    func layoutRectangles(_ rect: CGRect) {
         let width = rect.width
         let height = rect.height / 5.0
         let deviceNameRect = CGRect(x: 0,
@@ -133,27 +133,27 @@ class PurgardStatsView: UIView {
         self.addSubview(self.temperatureLabel!)
     }
     
-    func setDeviceName(new_name: String) {
+    func setDeviceName(_ new_name: String) {
         self.deviceNameLabel?.text = new_name
         self.setNeedsDisplay()
     }
     
-    func setConnectionStatus(status: String) {
+    func setConnectionStatus(_ status: String) {
         self.connectionStatusLabel?.text = status
         self.setNeedsDisplay()
     }
     
-    func setLevel(new_level: String) {
+    func setLevel(_ new_level: String) {
         self.levelLabel?.text = new_level
         self.setNeedsDisplay()
     }
     
-    func setVoltage(new_voltage: String) {
+    func setVoltage(_ new_voltage: String) {
         self.batteryLabel?.text = new_voltage
         self.setNeedsDisplay()
     }
     
-    func setTemperature(new_temp: String) {
+    func setTemperature(_ new_temp: String) {
         self.temperatureLabel?.text = new_temp
         self.setNeedsDisplay()
     }

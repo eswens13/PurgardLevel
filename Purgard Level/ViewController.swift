@@ -145,7 +145,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         // Get some useful information about the screen
         let centerX = self.view.center.x
         let centerY = self.view.center.y
-        let screenRect = UIScreen.mainScreen().bounds
+        let screenRect = UIScreen.main.bounds
         let screenWidth = screenRect.width
         let screenHeight = screenRect.height
         
@@ -157,14 +157,14 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         let statsRect = CGRect(x: 0, y: 0, width: 200, height: 200)
         self.statsView = PurgardStatsView(frame: statsRect)
         self.statsView.translatesAutoresizingMaskIntoConstraints = true
-        self.statsView.backgroundColor = UIColor.clearColor()
+        self.statsView.backgroundColor = UIColor.clear
         self.statsView.setDeviceName("Device: \(self.navigationItem.title!)")
         self.view.addSubview(self.statsView)
         
         let levelRect = CGRect(x: 0, y: 0, width: 200, height: 200)
         self.levelView = PurgardLevelView(frame: levelRect)
         self.levelView.translatesAutoresizingMaskIntoConstraints = true
-        self.levelView.backgroundColor = UIColor.clearColor()
+        self.levelView.backgroundColor = UIColor.clear
         self.view.addSubview(self.levelView)
  
         // Set properties for progress view. Default height of the progress bar 
@@ -189,7 +189,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                           height: screenHeight / 3.0)
         self.batteryView = BatteryView(frame: battRect.insetBy(dx: 0, dy: 20))
         self.batteryView.translatesAutoresizingMaskIntoConstraints = true
-        self.batteryView.backgroundColor = UIColor.clearColor()
+        self.batteryView.backgroundColor = UIColor.clear
         self.batteryView.updateLevel(0)
         self.view.addSubview(self.batteryView)
         
@@ -199,7 +199,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                               height: screenHeight / 3.0)
         self.temperatureView = TemperatureView(frame: tempRect.insetBy(dx: 20, dy: 20))
         self.temperatureView.translatesAutoresizingMaskIntoConstraints = true
-        self.temperatureView.backgroundColor = UIColor.clearColor()
+        self.temperatureView.backgroundColor = UIColor.clear
         self.temperatureView.updateLevel(0)
         self.view.addSubview(self.temperatureView)
         
@@ -207,14 +207,14 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     /// TESTING METHOD
-    func drawCirclesAtCorners(rect: CGRect, color: UIColor) {
+    func drawCirclesAtCorners(_ rect: CGRect, color: UIColor) {
         var corners = [CGPoint]()
         let origin = rect.origin
         let width = rect.width
         let height = rect.height
-        let tRPoint = CGPointMake(origin.x + width, origin.y)
-        let bRPoint = CGPointMake(origin.x + width, origin.y + height)
-        let blPoint = CGPointMake(origin.x, origin.y + height)
+        let tRPoint = CGPoint(x: origin.x + width, y: origin.y)
+        let bRPoint = CGPoint(x: origin.x + width, y: origin.y + height)
+        let blPoint = CGPoint(x: origin.x, y: origin.y + height)
         corners.append(origin)
         corners.append(tRPoint)
         corners.append(bRPoint)
@@ -224,10 +224,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             let circlePath = UIBezierPath(arcCenter: corner, radius: 5.0,
                 startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: false)
             let shapeLayer = CAShapeLayer()
-            shapeLayer.path = circlePath.CGPath
+            shapeLayer.path = circlePath.cgPath
             
-            shapeLayer.fillColor = color.CGColor
-            shapeLayer.strokeColor = color.CGColor
+            shapeLayer.fillColor = color.cgColor
+            shapeLayer.strokeColor = color.cgColor
             shapeLayer.lineWidth = 2.0
             
             view.layer.addSublayer(shapeLayer)
@@ -235,7 +235,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
 
     }
     
-    func updateProgress(progress: Int) {
+    /// Function to update the level.
+    func updateProgress(_ progress: Int) {
         if (progress > 100) {
             self.levelView.updateProgress(100)
             self.statsView.setLevel("Level: 100 %")
@@ -246,7 +247,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func updateVoltage(voltage: Int) {
+    /// Function to update the voltage.
+    func updateVoltage(_ voltage: Int) {
         if (voltage > 100) {
             self.batteryView.updateLevel(100)
             self.statsView.setVoltage("Batt: 100 %")
@@ -257,13 +259,14 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func updateTemperature(temperature: Int) {
+    /// Function to update the temperature.
+    func updateTemperature(_ temperature: Int) {
         self.temperatureView.updateLevel(CGFloat(temperature))
         let fahrTemp = ((9.0 / 5.0) * Double(temperature)) + 32.0
         self.statsView.setTemperature("Temp: \(Int(fahrTemp)) \u{00B0}F")
     }
     
-    override func willMoveToParentViewController(parent: UIViewController?) {
+    override func willMove(toParentViewController parent: UIViewController?) {
         if parent == nil && bleController?.currentDevice != nil {
             bleController!.disconnectFromCurrentDevice()
         }

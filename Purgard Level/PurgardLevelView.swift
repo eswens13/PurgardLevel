@@ -22,7 +22,7 @@ class PurgardLevelView: UIView {
         super.init(frame: frame)
         self.backgroundView?.translatesAutoresizingMaskIntoConstraints = true
         self.backgroundView = UIView(frame: frame.insetBy(dx: 20, dy: 20))
-        self.backgroundView?.backgroundColor = UIColor.grayColor()
+        self.backgroundView?.backgroundColor = UIColor.gray
         
         let progressViewRect = CGRect(x: self.backgroundView!.frame.minX,
                                       y: self.backgroundView!.frame.maxY - 10,
@@ -39,7 +39,7 @@ class PurgardLevelView: UIView {
         self.init()
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         
         // Remove old progress view
         self.progressView?.removeFromSuperview()
@@ -63,7 +63,7 @@ class PurgardLevelView: UIView {
         
     }
     
-    func updateProgress(new_progress: Int) {
+    func updateProgress(_ new_progress: Int) {
         self.progress = new_progress
         self.setNeedsDisplay()
     }
