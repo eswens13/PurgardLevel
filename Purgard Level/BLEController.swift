@@ -91,7 +91,7 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
   {
     self.currentDevice = peripheral
     self.currentDevice!.delegate = self
-    self.cachedDevices?.append(self.currentDevice)
+    self.cachedDevices?.append(self.currentDevice!)
     
     self.currentDevice?.discoverServices(serviceUuids)
   }
