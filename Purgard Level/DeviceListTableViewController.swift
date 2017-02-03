@@ -94,6 +94,10 @@ class DeviceListTableViewController: UITableViewController,
         self.bleController!.getAvailableDevices()[indexPath.row]
             .identifier.uuidString
     
+    cell.preservesSuperviewLayoutMargins = false
+    cell.separatorInset = UIEdgeInsets.zero
+    cell.layoutMargins = UIEdgeInsets.zero
+    
     return cell
   }
 
