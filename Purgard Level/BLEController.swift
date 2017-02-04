@@ -219,8 +219,8 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
           
         // The voltage characteristic is an unsigned 16-bit integer.
         // Convert to an integer and send to view controller.
-        var byte:UInt16 = 0x0000
-        (characteristic.value as NSData?)?.getBytes(&byte, length: 2)
+        var byte:UInt8 = 0x00
+        (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
         let intData:Int = Int(byte)
         deviceViewController!.updateVoltage(intData)
         break
@@ -230,7 +230,7 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         // The temperature characteristic is a signed char in the range
         // of -127 to 127. It is in celcius, so we have to convert to 
         // fahrenheit.
-        var byte:Int8 = 0x00
+        var byte:UInt8 = 0x00
         (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
         let intData:Int = Int(byte)
         deviceViewController!.updateTemperature(intData)

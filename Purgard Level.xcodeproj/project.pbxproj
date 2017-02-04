@@ -22,6 +22,9 @@
 		C6D247DF1C8FF24400A9BC0C /* Purgard_LevelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D247DE1C8FF24300A9BC0C /* Purgard_LevelTests.swift */; };
 		C6D247EA1C8FF24400A9BC0C /* Purgard_LevelUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D247E91C8FF24400A9BC0C /* Purgard_LevelUITests.swift */; };
 		C6D247F81C8FF7A700A9BC0C /* PurgardLevelProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D247F71C8FF7A700A9BC0C /* PurgardLevelProgressBar.swift */; };
+		C6ECA6951E454BDA00C431DA /* Devices.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6ECA6941E454BDA00C431DA /* Devices.plist */; };
+		C6ECA6971E454EBC00C431DA /* PListReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ECA6961E454EBC00C431DA /* PListReader.swift */; };
+		C6ECA6991E454ECE00C431DA /* PListWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ECA6981E454ECE00C431DA /* PListWriter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,9 @@
 		C6D247E91C8FF24400A9BC0C /* Purgard_LevelUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purgard_LevelUITests.swift; sourceTree = "<group>"; };
 		C6D247EB1C8FF24400A9BC0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6D247F71C8FF7A700A9BC0C /* PurgardLevelProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurgardLevelProgressBar.swift; sourceTree = "<group>"; };
+		C6ECA6941E454BDA00C431DA /* Devices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Devices.plist; sourceTree = "<group>"; };
+		C6ECA6961E454EBC00C431DA /* PListReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PListReader.swift; sourceTree = "<group>"; };
+		C6ECA6981E454ECE00C431DA /* PListWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PListWriter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +133,9 @@
 				C6AD6AE61C9CB261004EBD1F /* BLEController.swift */,
 				C67D32931D34A54F00377642 /* PurgardStatsView.swift */,
 				C680316B1D35E66C00DE2522 /* PurgardLevelView.swift */,
+				C6ECA6941E454BDA00C431DA /* Devices.plist */,
+				C6ECA6961E454EBC00C431DA /* PListReader.swift */,
+				C6ECA6981E454ECE00C431DA /* PListWriter.swift */,
 			);
 			path = "Purgard Level";
 			sourceTree = "<group>";
@@ -259,6 +268,7 @@
 			files = (
 				C6D247D41C8FF24300A9BC0C /* LaunchScreen.storyboard in Resources */,
 				C6D247D11C8FF24300A9BC0C /* Assets.xcassets in Resources */,
+				C6ECA6951E454BDA00C431DA /* Devices.plist in Resources */,
 				C6D247CF1C8FF24300A9BC0C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,11 +299,13 @@
 				C63268ED1CD7D78400490179 /* BatteryView.swift in Sources */,
 				C63268EE1CD7D78400490179 /* TemperatureView.swift in Sources */,
 				C6D247CC1C8FF24300A9BC0C /* ViewController.swift in Sources */,
+				C6ECA6991E454ECE00C431DA /* PListWriter.swift in Sources */,
 				C6D247CA1C8FF24300A9BC0C /* AppDelegate.swift in Sources */,
 				C6D247F81C8FF7A700A9BC0C /* PurgardLevelProgressBar.swift in Sources */,
 				C68E2A151C9BBFD000A24BB1 /* DeviceTableViewCell.swift in Sources */,
 				C68E2A171C9BC5DD00A24BB1 /* DeviceListTableViewController.swift in Sources */,
 				C6AD6AE71C9CB261004EBD1F /* BLEController.swift in Sources */,
+				C6ECA6971E454EBC00C431DA /* PListReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

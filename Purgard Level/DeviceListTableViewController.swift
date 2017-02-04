@@ -12,6 +12,7 @@ class DeviceListTableViewController: UITableViewController,
                                      UIGestureRecognizerDelegate
 {
   var bleController: BLEController?
+  var plistReader:PListReader?
     
   override func viewDidLoad()
   {
@@ -87,16 +88,13 @@ class DeviceListTableViewController: UITableViewController,
     let cell = tableView.dequeueReusableCell(withIdentifier: "deviceCell",
             for: indexPath) as! DeviceTableViewCell
     
-    // Set the properties of the cell
-    cell.deviceNameLabel?.text =
-        self.bleController!.getAvailableDevices()[indexPath.row].name
-    cell.deviceAddressLabel?.text =
-        self.bleController!.getAvailableDevices()[indexPath.row]
-            .identifier.uuidString
-    
-    cell.preservesSuperviewLayoutMargins = false
-    cell.separatorInset = UIEdgeInsets.zero
-    cell.layoutMargins = UIEdgeInsets.zero
+    // Fill the labels with device info.
+    let device = self.bleController!.getAvailableDevices()[indexPath.row]
+    /*
+      If we have connected to this device before, make the name bold.
+     */
+    cell.deviceNameLabel?.text = device.name
+    cell.deviceAddressLabel?.text = "  " + device.identifier.uuidString
     
     return cell
   }
