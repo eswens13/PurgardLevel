@@ -32,13 +32,28 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
   let UUID_CLIENT_CONFIG_DESCRIPTOR =
                           CBUUID(string: "00002902-0000-1000-8000-00805F9B34FB")
   
+  // The Central Manager for all Bluetooth interactions.
   var centralManager: CBCentralManager?
+  
+  // An array of UUIDs for the services we care about.
   var serviceUuids: [CBUUID]?
+  
+  /// An array of UUIDs for the characteristics we care about.
   var characteristicUuids: [CBUUID]?
+  
+  // An array of devices that have been discovered.
   var availableDevices: [CBPeripheral]?
+  
+  // An array of device UUIDs that have been discovered before.
   var cachedDevices: [CBPeripheral]?
+  
+  // A reference to the table view controller.
   var deviceListViewController: DeviceListTableViewController?
+  
+  // A reference to the view controller displaying the device's information.
   var deviceViewController: ViewController?
+  
+  // A reference to the device that is currently connected.
   var currentDevice: CBPeripheral?
   
   // -------------------------------------------------------------------------

@@ -12,7 +12,6 @@ class DeviceListTableViewController: UITableViewController,
                                      UIGestureRecognizerDelegate
 {
   var bleController: BLEController?
-  var plistReader:PListReader?
     
   override func viewDidLoad()
   {
