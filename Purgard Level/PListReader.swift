@@ -12,7 +12,8 @@ import Foundation
 /// at:
 ///     http://stackoverflow.com/questions/24692746/write-to-plist-file-in-swift
 ///
-class PListReader {
+class PListReader
+{
   
   /// Reads the Devices plist in the Documents directory to get an array of any
   /// device UUID strings that we have connected with before.
@@ -31,22 +32,6 @@ class PListReader {
         print(deviceID)
       }
     }
-    
-    // The code below reads the Devices plist in the app bundle. However it
-    // extracts the plist to a Data object rather than a dictionary. If the
-    // other way is not working, try this.
-    /*
-    if let fileUrl = Bundle.main.url(forResource: "Devices",
-                                     withExtension: "plist"),
-      let plistData = try? Data(contentsOf: fileUrl)
-    {
-      if let result = try? PropertyListSerialization.propertyList(
-        from: plistData, options: [], format: nil) as? [String:Any]
-      {
-        deviceUUIDs = result!["Devices"] as! [String]
-      }
-    }
-    */
     
     return deviceUUIDs
   }
@@ -123,6 +108,7 @@ class PListReader {
     let docsDir = NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                       .userDomainMask,
                                                       true)[0] as String
+
     let plistPath = (docsDir as NSString)
                               .strings(byAppendingPaths: ["\(title).plist"])[0]
     if (fileManager.fileExists(atPath: plistPath))

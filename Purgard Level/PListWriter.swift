@@ -26,7 +26,7 @@ class PListWriter {
   static func copyDevicesToDocsDir() -> Bool
   {
     var retVal:Bool = true
-    let devicesPath = PListReader.plistExists(title: "Devices")
+    var devicesPath = PListReader.plistExists(title: "Devices")
     
     // Check to see if the plist has already been copied over to the Documents
     // directory. If it has, do nothing (we can read and write from that plist).
@@ -41,6 +41,14 @@ class PListWriter {
         // We can use this for debugging if needed.
         //let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
         //                                            as? [String:AnyObject]
+        
+        // Set the path in the Documents directory where we're going to copy the
+        // plist.
+        devicesPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                          .userDomainMask,
+                                                          true)[0] as String
+        devicesPath = (devicesPath as NSString)
+                                .strings(byAppendingPaths: ["Devices.plist"])[0]
         
         // Copy the plist from the app bundle to the Documents directory.
         do
