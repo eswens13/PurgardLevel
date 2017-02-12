@@ -8,10 +8,12 @@
 
 import UIKit
 
-class DeviceListTableViewController: UITableViewController,
+class DeviceListTableViewController: UIViewController, UITableViewDelegate,
+                                     UITableViewDataSource,
                                      UIGestureRecognizerDelegate
 {
   var bleController: BLEController?
+  var tableView: UITableView?
   
   // MARK: - Overrides
   
@@ -19,19 +21,21 @@ class DeviceListTableViewController: UITableViewController,
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    
-    self.addLogoView()
 
     self.navigationItem.title = "Available Devices"
     self.bleController = BLEController(listViewController: self)
     self.stopScan()
+    
+    tableView = UITableView()
+    
+    self.addLogoView()
   }
   
   // This is called whenever the table view controller becomes the main view
   // controller.
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    self.tableView.reloadData()
+    self.tableView?.reloadData()
     self.addLogoView()
   }
 
@@ -44,12 +48,13 @@ class DeviceListTableViewController: UITableViewController,
   override func viewDidLayoutSubviews()
   {
     super.viewDidLayoutSubviews()
-    
+    /*
     if let rect = self.navigationController?.navigationBar.frame
     {
       let y = rect.size.height + rect.origin.y
-      self.tableView.contentInset = UIEdgeInsetsMake(y, 0, 0, 0)
+      self.tableView?.contentInset = UIEdgeInsetsMake(y, 0, 0, 0)
     }
+     */
   }
   
   // MARK: - Helper Functions
@@ -94,39 +99,33 @@ class DeviceListTableViewController: UITableViewController,
     let screenWidth = screenRect.width
     let screenHeight = screenRect.height - navHeight! - statusBarHeight
     
-    let viewHeight:CGFloat = 150
-    /*
-    let myView:UIView =
-      UIView(frame: CGRect(x: 0,
-                           y: screenHeight - viewHeight,
-                           width: screenWidth,
-                           height: viewHeight))
-    */
+    let viewHeight:CGFloat = (2.0 / 3.0) * CGFloat(screenWidth)
+    print("viewHeight = \(viewHeight)")
     let imageView:UIImageView =
                   UIImageView(frame: CGRect(x: 0,
-                                            y: screenHeight - viewHeight,
+                                            y: (screenHeight - viewHeight) + 100,
                                             width: screenWidth,
                                             height: viewHeight))
     imageView.image = UIImage(named: "Logo")
     imageView.contentMode = .scaleAspectFit
-    self.tableView.addSubview(imageView)
+    self.view.addSubview(imageView)
   }
 
   // MARK: - Table view data source
 
-  override func numberOfSections(in tableView: UITableView) -> Int
+  func numberOfSections(in tableView: UITableView) -> Int
   {
     return 1
   }
 
-  override func tableView(_ tableView: UITableView,
+  func tableView(_ tableView: UITableView,
                           numberOfRowsInSection section: Int) -> Int
   {
     return self.bleController!.getAvailableDevices().count
   }
 
-  override func tableView(_ tableView: UITableView,
-                          cellForRowAt indexPath: IndexPath) -> UITableViewCell
+  func tableView(_ tableView: UITableView,
+                    cellForRowAt indexPath: IndexPath) -> UITableViewCell
   {
     // Get an instance of the cell
     let cell = tableView.dequeueReusableCell(withIdentifier: "deviceCell",
@@ -167,7 +166,7 @@ class DeviceListTableViewController: UITableViewController,
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
     if (segue.identifier == "toLevelSegue") {
-      let cellIndexPath = self.tableView.indexPath(for: sender as!
+      let cellIndexPath = self.tableView?.indexPath(for: sender as!
                                                     DeviceTableViewCell)
       
       // Get the next view controller
