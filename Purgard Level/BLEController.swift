@@ -44,9 +44,6 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
   // An array of devices that have been discovered.
   var availableDevices: [CBPeripheral]?
   
-  // An array of device UUIDs that have been discovered before.
-  var cachedDevices: [CBPeripheral]?
-  
   // A reference to the table view controller.
   var deviceListViewController: DeviceListTableViewController?
   
@@ -104,10 +101,19 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
   func centralManager(_ central: CBCentralManager,
                       didConnect peripheral: CBPeripheral)
   {
+    // Set the current device as the one we're connected to.
     self.currentDevice = peripheral
     self.currentDevice!.delegate = self
-    self.cachedDevices?.append(self.currentDevice!)
     
+    // Add the device's UUID to the plist.
+    let addResult:Bool =
+          PListWriter.addDevice(UUID: self.currentDevice!.identifier.uuidString)
+    if (!addResult)
+    {
+      print("Didn't add the device to plist!")
+    }
+    
+    // Start discovering the device's services.
     self.currentDevice?.discoverServices(serviceUuids)
   }
   
@@ -290,23 +296,26 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     {
       print("Current device null")
     }
-    
-    for service in (currentDevice?.services)!
+    else
     {
-      for characteristic in (service.characteristics)!
+      for service in (currentDevice?.services)!
       {
-        currentDevice!.setNotifyValue(false, for: characteristic)
+        for characteristic in (service.characteristics)!
+        {
+          currentDevice!.setNotifyValue(false, for: characteristic)
+        }
       }
+    
+      // Old version without the for loops. I think this only sets the
+      // notification value to false for one of the possibly three
+      // characteristics.
+      //
+      //let characteristic:CBCharacteristic =
+      //                      (currentDevice?.services![0].characteristics![0])!
+      //currentDevice!.setNotifyValue(false, for: characteristic)
+    
+      self.centralManager!.cancelPeripheralConnection(self.currentDevice!)
     }
-    
-    // Old version without the for loops. I think this only sets the
-    // notification value to false for one of the possibly three characteristics
-    //
-    //let characteristic:CBCharacteristic =
-    //                        (currentDevice?.services![0].characteristics![0])!
-    //currentDevice!.setNotifyValue(false, for: characteristic)
-    
-    self.centralManager!.cancelPeripheralConnection(self.currentDevice!)
   }
     
 }

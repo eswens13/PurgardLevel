@@ -3,9 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>Devices</key>
-	<array>
-		<string>Device ID 1</string>
-		<string>Device ID 2</string>
-	</array>
+	<array/>
 </dict>
 </plist>

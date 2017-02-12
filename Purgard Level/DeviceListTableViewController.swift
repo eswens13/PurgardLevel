@@ -12,14 +12,27 @@ class DeviceListTableViewController: UITableViewController,
                                      UIGestureRecognizerDelegate
 {
   var bleController: BLEController?
-    
+  
+  // MARK: - Overrides
+  
+  // This is called once at application startup.
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    
+    self.addLogoView()
 
     self.navigationItem.title = "Available Devices"
     self.bleController = BLEController(listViewController: self)
     self.stopScan()
+  }
+  
+  // This is called whenever the table view controller becomes the main view
+  // controller.
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    self.tableView.reloadData()
+    self.addLogoView()
   }
 
   override func didReceiveMemoryWarning()
@@ -38,6 +51,8 @@ class DeviceListTableViewController: UITableViewController,
       self.tableView.contentInset = UIEdgeInsetsMake(y, 0, 0, 0)
     }
   }
+  
+  // MARK: - Helper Functions
   
   func scanForDevices()
   {
@@ -65,6 +80,36 @@ class DeviceListTableViewController: UITableViewController,
                       action: #selector(DeviceListTableViewController.scanForDevices))
     self.navigationItem.rightBarButtonItem = scanItem
     self.bleController?.stopScan()
+  }
+  
+  func addLogoView()
+  {
+    let statusBarFrame = UIApplication.shared.statusBarFrame
+    let statusBarHeight = statusBarFrame.height
+    
+    let navFrame = self.navigationController?.navigationBar.frame
+    let navHeight = navFrame?.height
+    
+    let screenRect = UIScreen.main.bounds
+    let screenWidth = screenRect.width
+    let screenHeight = screenRect.height - navHeight! - statusBarHeight
+    
+    let viewHeight:CGFloat = 150
+    /*
+    let myView:UIView =
+      UIView(frame: CGRect(x: 0,
+                           y: screenHeight - viewHeight,
+                           width: screenWidth,
+                           height: viewHeight))
+    */
+    let imageView:UIImageView =
+                  UIImageView(frame: CGRect(x: 0,
+                                            y: screenHeight - viewHeight,
+                                            width: screenWidth,
+                                            height: viewHeight))
+    imageView.image = UIImage(named: "Logo")
+    imageView.contentMode = .scaleAspectFit
+    self.tableView.addSubview(imageView)
   }
 
   // MARK: - Table view data source
