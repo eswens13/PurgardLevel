@@ -89,9 +89,26 @@ class DeviceListTableViewController: UITableViewController,
     
     // Fill the labels with device info.
     let device = self.bleController!.getAvailableDevices()[indexPath.row]
-    /*
-      If we have connected to this device before, make the name bold.
-     */
+
+    // If we have connected to this device before, make the name bold.
+    if (PListReader.devicesContains(UUID: device.identifier.uuidString))
+    {
+      let boldNameDescriptor:UIFontDescriptor =
+        cell.deviceNameLabel.font.fontDescriptor.withSymbolicTraits(.traitBold)!
+      let boldNameFont:UIFont = UIFont(descriptor: boldNameDescriptor, size: 0)
+      
+      cell.deviceNameLabel.font = boldNameFont
+      
+      let boldAddressDescriptor:UIFontDescriptor =
+        cell.deviceAddressLabel.font.fontDescriptor
+          .withSymbolicTraits(.traitBold)!
+      let boldAddressFont:UIFont = UIFont(descriptor: boldAddressDescriptor,
+                                          size: 0)
+      
+      cell.deviceAddressLabel.font = boldAddressFont
+    }
+    
+    // Set the name of the device and the UUID of the device appropriately.
     cell.deviceNameLabel?.text = device.name
     cell.deviceAddressLabel?.text = "  " + device.identifier.uuidString
     
