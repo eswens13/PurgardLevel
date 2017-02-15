@@ -6,13 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Device List Table View Controller-->
         <scene sceneID="8JN-Eq-8rz">
             <objects>
-                <viewController id="4Ex-o2-M4N" customClass="DeviceListTableViewController" customModule="Purgard_Level" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="4Ex-o2-M4N" customClass="DeviceListTableViewController" customModule="Purgard_Level" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gMd-CN-LdZ"/>
                         <viewControllerLayoutGuide type="bottom" id="hTO-mE-kDc"/>
@@ -21,21 +22,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="89" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rAR-xc-nxR">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rAR-xc-nxR">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="deviceCell" rowHeight="89" id="U33-SM-xt4" customClass="DeviceTableViewCell" customModule="Purgard_Level" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="89"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="deviceCell" rowHeight="90" id="U33-SM-xt4" customClass="DeviceTableViewCell" customModule="Purgard_Level" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U33-SM-xt4" id="xd2-nx-xgx">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="89.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kdN-2A-ztY">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kdN-2A-ztY">
                                                     <rect key="frame" x="8" y="8" width="359" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Device Name">
                                                             <attributes>
@@ -46,9 +46,8 @@
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Co-LP-CLd">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Co-LP-CLd">
                                                     <rect key="frame" x="8" y="46" width="359" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="  Device Address">
                                                             <attributes>
@@ -59,8 +58,22 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="leadingMargin" secondItem="0Co-LP-CLd" secondAttribute="leading" id="KSV-iP-WYP"/>
+                                                <constraint firstItem="0Co-LP-CLd" firstAttribute="width" secondItem="kdN-2A-ztY" secondAttribute="width" id="OzJ-wd-PBS"/>
+                                                <constraint firstAttribute="topMargin" secondItem="kdN-2A-ztY" secondAttribute="top" id="R0H-o8-ndT"/>
+                                                <constraint firstItem="0Co-LP-CLd" firstAttribute="leading" secondItem="kdN-2A-ztY" secondAttribute="leading" id="RS5-MD-Vtt"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="0Co-LP-CLd" secondAttribute="bottom" constant="5.5" id="dsA-Rj-gca"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="kdN-2A-ztY" secondAttribute="leading" id="qAM-VJ-38X"/>
+                                                <constraint firstItem="0Co-LP-CLd" firstAttribute="height" secondItem="kdN-2A-ztY" secondAttribute="height" id="qmY-IA-5l9"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="deviceAddressLabel" destination="0Co-LP-CLd" id="zzR-XR-Z5V"/>
+                                            <outlet property="deviceNameLabel" destination="kdN-2A-ztY" id="1Hj-2v-N6P"/>
+                                            <segue destination="BYZ-38-t0r" kind="push" identifier="toLevelSegue" id="KtW-bQ-wRj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -78,6 +91,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1Yx-k8-bV8"/>
+                    <connections>
+                        <outlet property="tableView" destination="rAR-xc-nxR" id="9gx-LL-LbX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9v4-IM-E0z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

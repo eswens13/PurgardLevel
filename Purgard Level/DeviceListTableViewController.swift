@@ -13,7 +13,7 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
                                      UIGestureRecognizerDelegate
 {
   var bleController: BLEController?
-  var tableView: UITableView?
+  @IBOutlet weak var tableView: UITableView?
   
   // MARK: - Overrides
   
@@ -25,18 +25,21 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
     self.navigationItem.title = "Available Devices"
     self.bleController = BLEController(listViewController: self)
     self.stopScan()
-    
-    tableView = UITableView()
-    
+
     self.addLogoView()
+  }
+  
+  override func viewWillAppear(_ animated: Bool)
+  {
+    super.viewWillAppear(animated)
+    self.tableView?.reloadData()
   }
   
   // This is called whenever the table view controller becomes the main view
   // controller.
-  override func viewDidAppear(_ animated: Bool) {
+  override func viewDidAppear(_ animated: Bool)
+  {
     super.viewDidAppear(animated)
-    self.tableView?.reloadData()
-    self.addLogoView()
   }
 
   override func didReceiveMemoryWarning()
@@ -48,13 +51,6 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   override func viewDidLayoutSubviews()
   {
     super.viewDidLayoutSubviews()
-    /*
-    if let rect = self.navigationController?.navigationBar.frame
-    {
-      let y = rect.size.height + rect.origin.y
-      self.tableView?.contentInset = UIEdgeInsetsMake(y, 0, 0, 0)
-    }
-     */
   }
   
   // MARK: - Helper Functions
@@ -99,14 +95,18 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
     let screenWidth = screenRect.width
     let screenHeight = screenRect.height - navHeight! - statusBarHeight
     
-    let viewHeight:CGFloat = (2.0 / 3.0) * CGFloat(screenWidth)
-    print("viewHeight = \(viewHeight)")
+    // The logo is 2:3 aspect ratio and we want it to take up 2/3 of the screen
+    // width.
+    let viewHeight:CGFloat = (4.0 / 9.0) * CGFloat(screenWidth)
+    
     let imageView:UIImageView =
                   UIImageView(frame: CGRect(x: 0,
-                                            y: (screenHeight - viewHeight) + 100,
+                                            y: navHeight! + statusBarHeight +
+                                                    (screenHeight - viewHeight),
                                             width: screenWidth,
                                             height: viewHeight))
     imageView.image = UIImage(named: "Logo")
+    imageView.backgroundColor = UIColor.white
     imageView.contentMode = .scaleAspectFit
     self.view.addSubview(imageView)
   }
@@ -121,7 +121,8 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   func tableView(_ tableView: UITableView,
                           numberOfRowsInSection section: Int) -> Int
   {
-    return self.bleController!.getAvailableDevices().count
+    let rows = self.bleController!.getAvailableDevices().count
+    return rows
   }
 
   func tableView(_ tableView: UITableView,
@@ -155,8 +156,14 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
     // Set the name of the device and the UUID of the device appropriately.
     cell.deviceNameLabel?.text = device.name
     cell.deviceAddressLabel?.text = "  " + device.identifier.uuidString
-    
+
     return cell
+  }
+  
+  func tableView(_ tableView: UITableView,
+                 heightForRowAt indexPath: IndexPath) -> CGFloat
+  {
+    return 90
   }
 
   // MARK: - Navigation

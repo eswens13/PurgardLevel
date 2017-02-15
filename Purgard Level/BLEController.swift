@@ -95,7 +95,8 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                       rssi RSSI: NSNumber)
   {
     self.availableDevices!.append(peripheral)
-    self.deviceListViewController!.loadView()
+    //self.deviceListViewController!.loadView()
+    self.deviceListViewController!.tableView?.reloadData()
   }
     
   func centralManager(_ central: CBCentralManager,
@@ -275,7 +276,8 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
   func startScan()
   {
     self.availableDevices = [CBPeripheral] ()
-    self.deviceListViewController?.loadView()
+    //self.deviceListViewController?.loadView()
+    self.deviceListViewController?.tableView?.reloadData()
     self.centralManager!.scanForPeripherals(withServices: self.serviceUuids,
                                             options: nil)
   }

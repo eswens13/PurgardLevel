@@ -20,12 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
   {
     // Override point for customization after application launch.
     
-    let destroyResult:Bool = PListWriter.destroyPlist(title: "Devices")
-    if (!destroyResult)
-    {
-      print("AppDelegate: Couldnot destroy the Devices plist")
-    }
-    
     // Copy the plist from the app bundle to the Documents directory.
     let deviceResult:Bool = PListWriter.copyDevicesToDocsDir()
     if (!deviceResult)
