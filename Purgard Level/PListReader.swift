@@ -28,9 +28,6 @@ class PListReader
     if (0 != resultDictionary.count)
     {
       deviceUUIDs = resultDictionary["Devices"] as! [String]
-      for deviceID in deviceUUIDs {
-        print(deviceID)
-      }
     }
     
     return deviceUUIDs
