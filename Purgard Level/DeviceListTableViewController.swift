@@ -15,6 +15,7 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
 {
   var bleController: BLEController?
   @IBOutlet weak var tableView: UITableView?
+  var activityIndicator: UIActivityIndicatorView?
   
   var cameFromWait:Bool = false
   
@@ -48,6 +49,10 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
       cameFromWait = false
       performSegue(withIdentifier: "toLevelSegue", sender: self)
     }
+    else
+    {
+      self.scanForDevices()
+    }
   }
 
   override func didReceiveMemoryWarning()
@@ -72,6 +77,18 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
                         action: #selector(DeviceListTableViewController.stopScan))
     self.navigationItem.rightBarButtonItem = scanItem
     self.bleController?.startScan()
+    
+    // Add an activity indicator to the left side of the nav bar.
+    let statusBarHeight = UIApplication.shared.statusBarFrame.height
+    let navBarHeight = navigationController?.navigationBar.frame.height
+    self.activityIndicator =
+                UIActivityIndicatorView(frame: CGRect(x: 10,
+                                                      y: statusBarHeight,
+                                                      width: navBarHeight!,
+                                                      height: navBarHeight!))
+    self.activityIndicator!.activityIndicatorViewStyle = .gray
+    self.activityIndicator!.startAnimating()
+    self.navigationController?.view.addSubview(self.activityIndicator!)
     let timer =
       Timer.scheduledTimer(timeInterval: TimeInterval(5.0),
                            target: self,
@@ -88,6 +105,7 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
                       target: self,
                       action: #selector(DeviceListTableViewController.scanForDevices))
     self.navigationItem.rightBarButtonItem = scanItem
+    self.activityIndicator?.removeFromSuperview()
     self.bleController?.stopScan()
   }
   
@@ -180,6 +198,10 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
                                       self.bleController!.getAvailableDevices()
     if (indexPath.row < availableDevices.count)
     {
+      // Stop scanning for devices.
+      self.stopScan()
+      
+      // Set the current device to the one that was selected.
       let device:CBPeripheral =
                     (self.bleController?.getAvailableDevices()[indexPath.row])!
       BLEController.currentDevice = device
@@ -191,8 +213,6 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
         BLEController.connectToDevice()
       }
     }
-    
-    print("Done with didSelectRowAt")
   }
 
   // MARK: - Navigation
@@ -204,14 +224,14 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
     print("In prepareForSegue")
     if (segue.identifier == "toLevelSegue")
     {
-      print("Triggered level segue")
-      
-      // Get the next view controller
+ 
+      // Get the next view controller and set some of its properties.
       let vc = segue.destination as! ViewController
       vc.navigationItem.title = BLEController.currentDevice!.name
       vc.bleController = self.bleController
       self.bleController?.deviceViewController = vc
       vc.device = BLEController.currentDevice!
+      
       // Add a back button to the navigation bar
       let backItem = UIBarButtonItem(title: "Devices",
                                      style: .plain,
@@ -221,7 +241,7 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
     }
     else if (segue.identifier == "toWaitingSegue")
     {
-      print("Triggered waiting segue")
+      // Get the next view controller and set some of its properties.
       let vc = segue.destination as! WaitingViewController
       vc.setBLEController(controller: self.bleController!)
       vc.setDeviceListVC(controller: self)
