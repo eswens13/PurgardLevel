@@ -71,17 +71,12 @@ class WaitingViewController: UIViewController
   
   func waitForConnection()
   {
-    print("Waiting for battery sem")
     self.bleController?.batterySem.wait()
-    print("Waiting for temperatuer sem")
     self.bleController?.tempSem.wait()
-    print("Waiting for level sem")
     self.bleController?.levelSem.wait()
     
     self.deviceListVC?.cameFromWait = true
     
-    print("Dismissing WaitingViewController")
     self.dismiss(animated: true, completion: nil)
-    print("Dismissed WaitingViewController")
   }
 }

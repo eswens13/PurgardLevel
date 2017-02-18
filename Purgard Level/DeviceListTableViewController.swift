@@ -209,7 +209,6 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
       // Start a thread that will connect to the device.
       let thread:DispatchQueue = DispatchQueue.global(qos: .userInitiated)
       thread.async {
-        print("In async thread")
         BLEController.connectToDevice()
       }
     }
@@ -221,7 +220,6 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   // preparation before navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
-    print("In prepareForSegue")
     if (segue.identifier == "toLevelSegue")
     {
  

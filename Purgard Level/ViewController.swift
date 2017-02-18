@@ -22,8 +22,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    print("In viewDidLoad")
-    
     self.setControlProperties()
   }
     

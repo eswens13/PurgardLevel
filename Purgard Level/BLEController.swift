@@ -102,7 +102,6 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
                       rssi RSSI: NSNumber)
   {
     self.availableDevices!.append(peripheral)
-    //self.deviceListViewController!.loadView()
     DispatchQueue.main.async(execute:
     {
       self.deviceListViewController!.tableView?.reloadData()
@@ -112,7 +111,6 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   func centralManager(_ central: CBCentralManager,
                       didConnect peripheral: CBPeripheral)
   {
-    print("CONNECTED")
     // Set the current device as the one we're connected to.
     BLEController.currentDevice = peripheral
     BLEController.currentDevice!.delegate = self
@@ -178,17 +176,14 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       switch service.uuid
       {
       case UUID_CAPSENSE_SERVICE:
-        print("DISCOVERED LEVEL SERVICE")
         peripheral.discoverCharacteristics(
                           [UUID_CAPSENSE_SLIDER_CHARACTERISTIC], for: service)
         break
       case UUID_VOLTAGE_SERVICE:
-        print("DISCOVERED BATTERY SERVICE")
         peripheral.discoverCharacteristics(
                           [UUID_VOLTAGE_CHARACTERISTIC], for: service)
         break
       case UUID_TEMPERATURE_SERVICE:
-        print("DISCOVERED TEMPERATURE SERVICE")
         peripheral.discoverCharacteristics(
                           [UUID_TEMPERATURE_CHARACTERISTIC], for: service)
         break
@@ -207,17 +202,14 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       switch charac.uuid
       {
       case UUID_CAPSENSE_SLIDER_CHARACTERISTIC:
-        print("DISCOVERED LEVEL CHAR")
         BLEController.currentDevice!.setNotifyValue(true, for: charac)
         levelSem.signal()
         break
       case UUID_TEMPERATURE_CHARACTERISTIC:
-        print("DISCOVERED TEMPERATURE CHAR")
         BLEController.currentDevice!.setNotifyValue(true, for: charac)
         tempSem.signal()
         break
       case UUID_VOLTAGE_CHARACTERISTIC:
-        print("DISCOVERED BATTERY CHAR")
         BLEController.currentDevice!.setNotifyValue(true, for: charac)
         batterySem.signal()
         break
@@ -331,7 +323,6 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   func startScan()
   {
     self.availableDevices = [CBPeripheral] ()
-    //self.deviceListViewController?.loadView()
     DispatchQueue.main.async(execute:
     {
       self.deviceListViewController?.tableView?.reloadData()
@@ -348,10 +339,8 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   
   static func connectToDevice()
   {
-    print("In connectToDevice")
     BLEController.centralManager!.connect(BLEController.currentDevice!,
                                           options: nil)
-    print("Exiting connectToDevice")
   }
   
   func disconnectFromCurrentDevice()
@@ -370,14 +359,6 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
                                                       for: characteristic)
         }
       }
-    
-      // Old version without the for loops. I think this only sets the
-      // notification value to false for one of the possibly three
-      // characteristics.
-      //
-      //let characteristic:CBCharacteristic =
-      //                      (currentDevice?.services![0].characteristics![0])!
-      //currentDevice!.setNotifyValue(false, for: characteristic)
     
       BLEController.centralManager!.cancelPeripheralConnection(
                             BLEController.currentDevice!)
