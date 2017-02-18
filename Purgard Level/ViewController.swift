@@ -67,15 +67,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     let width = self.view.bounds.width
     let height = self.view.bounds.height - navbarHeight
     
-    // Layout level view
-    /*let levelRect = CGRect(x: width / 2.0,
-                           y: navbarHeight,
-                           width: width / 2.0,
-                           height: height / 2.0)
-    self.levelView.frame = levelRect
-    self.levelView.layoutSubviews()
-    */
-    
     // Layout the purgard view.
     let purgardRect = CGRect(x: width / 2.0,
                              y: navbarHeight,
@@ -125,15 +116,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     self.statsView.frame = statsRect
     self.statsView.layoutSubviews()
     
-    // Layout level view
-    /*let levelRect = CGRect(x: width / 4.0,
-                           y: navbarHeight,
-                           width: width / 4.0,
-                           height: height)
-    self.levelView.frame = levelRect
-    self.levelView.layoutSubviews()
-    */
-    
     // Layout purgard view
     let purgardRect = CGRect(x: width / 4.0,
                              y: navbarHeight,
@@ -168,11 +150,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     let screenWidth = screenRect.width
     let screenHeight = screenRect.height
     
-    // This line allows us to move the label where we'd like to. Basically,
-    // it allows us to override AutoLayout for whatever component it is
-    // called on
-    //titleLabel.translatesAutoresizingMaskIntoConstraints = true
-    
     let statsRect = CGRect(x: 0, y: 0, width: 200, height: 200)
     self.statsView = PurgardStatsView(frame: statsRect)
     self.statsView.translatesAutoresizingMaskIntoConstraints = true
@@ -180,42 +157,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     self.statsView.setDeviceName("Device: \(self.navigationItem.title!)")
     self.view.addSubview(self.statsView)
     
-    /*
-    let levelRect = CGRect(x: 0, y: 0, width: 200, height: 200)
-    self.levelView = PurgardLevelView(frame: levelRect)
-    self.levelView.translatesAutoresizingMaskIntoConstraints = true
-    self.levelView.backgroundColor = UIColor.clear
-    self.view.addSubview(self.levelView)
-     */
-    
     let purgardRect = CGRect(x: 0, y: 0, width: 200, height: 200)
     self.purgardView = PurgardView(frame: purgardRect)
     self.purgardView.translatesAutoresizingMaskIntoConstraints = true
     self.purgardView.backgroundColor = UIColor.clear
     self.view.addSubview(self.purgardView)
-
-    // Set properties for progress view. Default height of the progress bar 
-    // is 2.0 so we scale accordingly
-    /*progressView.translatesAutoresizingMaskIntoConstraints = true
-    let navBarHeight = self.navigationController?.navigationBar.frame.height
-    let progressViewRect = CGRect(x: 0,
-                                  y: 0,
-                                  width: (2.0 * screenHeight / 3.0)
-                                                                - navBarHeight!,
-                                  height: screenWidth / 2.0)
-    progressView.frame = progressViewRect.insetBy(dx: 20, dy: 0)
-    progressView.center = CGPointMake(screenWidth / 2.0, 
-                                      (screenHeight / 3.0) + navBarHeight!)
-    progressView.progressTintColor = UIColor(red: 0.0,
-                                             green: (134.0 / 255.0),
-                                             blue: (139.0 / 255.0),
-                                             alpha: 1.0)
-    progressView.setProgress(0.0, animated: false)
-    progressView.transform =
-          CGAffineTransformMakeRotation(CGFloat(3.0 * M_PI / 2.0))
-    progressView.transform =
-          CGAffineTransformScale(progressView.transform, 1.0, screenWidth / 3.0)
-     */
     
     // Add the battery view
     let battRect = CGRect(x:0,

@@ -15,6 +15,9 @@ class WaitingViewController: UIViewController
   var activityIndicatorView: UIActivityIndicatorView?
   var label: UILabel?
   
+  var bleController: BLEController?
+  var deviceListVC: DeviceListTableViewController?
+  
   override func viewDidLoad()
   {
     super.viewDidLoad()
@@ -31,20 +34,54 @@ class WaitingViewController: UIViewController
                                 width: 300, height: 200)
     self.boxView = UIView(frame: boxRect)
     self.boxView?.backgroundColor = UIColor.white
+    self.boxView?.layer.cornerRadius = 10
     
     // Add the activity indicator itself to the background box.
     self.activityIndicatorView = UIActivityIndicatorView(
-                                    activityIndicatorStyle: .whiteLarge)
-    self.activityIndicatorView?.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
+                                    activityIndicatorStyle: .gray)
+    self.activityIndicatorView?.frame =
+                                    CGRect(x: 0, y: 0, width: 300, height: 200)
     self.activityIndicatorView?.startAnimating()
     self.boxView?.addSubview(self.activityIndicatorView!)
+    
+    // Add the label to the background box.
+    self.label = UILabel(frame: CGRect(x: 0, y: 140, width: 300, height: 30))
+    self.label?.textAlignment = .center
+    self.label?.font = UIFont(name: (self.label?.font.fontName)!, size: 20)
+    self.label?.text = "Connecting . . ."
+    self.boxView?.addSubview(self.label!)
     
     // Add the activity indicator to the main view.
     self.view.addSubview(self.boxView!)
   }
   
-  func didFinishWaiting()
+  override func viewDidAppear(_ animated: Bool) {
+    self.waitForConnection()
+  }
+  
+  func setBLEController(controller: BLEController)
   {
+    self.bleController = controller
+  }
+  
+  func setDeviceListVC(controller: DeviceListTableViewController)
+  {
+    self.deviceListVC = controller
+  }
+  
+  func waitForConnection()
+  {
+    print("Waiting for battery sem")
+    self.bleController?.batterySem.wait()
+    print("Waiting for temperatuer sem")
+    self.bleController?.tempSem.wait()
+    print("Waiting for level sem")
+    self.bleController?.levelSem.wait()
+    
+    self.deviceListVC?.cameFromWait = true
+    
+    print("Dismissing WaitingViewController")
     self.dismiss(animated: true, completion: nil)
+    print("Dismissed WaitingViewController")
   }
 }

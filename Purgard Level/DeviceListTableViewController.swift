@@ -16,6 +16,8 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   var bleController: BLEController?
   @IBOutlet weak var tableView: UITableView?
   
+  var cameFromWait:Bool = false
+  
   // MARK: - Overrides
   
   // This is called once at application startup.
@@ -41,6 +43,11 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   override func viewDidAppear(_ animated: Bool)
   {
     super.viewDidAppear(animated)
+    if (cameFromWait)
+    {
+      cameFromWait = false
+      performSegue(withIdentifier: "toLevelSegue", sender: self)
+    }
   }
 
   override func didReceiveMemoryWarning()
@@ -183,29 +190,6 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
         print("In async thread")
         BLEController.connectToDevice()
       }
-      
-      /*
-      let waitingVC:WaitingViewController =
-          self.storyboard?.instantiateViewController(
-              withIdentifier: "waitingViewController") as! WaitingViewController
-      waitingVC.loadView()
-      
-      self.present(waitingVC, animated: true, completion: nil)
-      */
-      
-      print("Waiting on temperature semaphore")
-      self.bleController?.tempSem.wait()
-      print("Waiting on battery semaphore")
-      self.bleController?.batterySem.wait()
-      print("Waiting on level semaphore")
-      self.bleController?.levelSem.wait()
-      print("Done waiting on semaphores")
-      
-      //waitingVC.didFinishWaiting()
-      
-      // Trigger the segue to the detail view.
-      self.performSegue(withIdentifier: "toLevelSegue",
-                        sender: tableView.cellForRow(at: indexPath))
     }
     
     print("Done with didSelectRowAt")
@@ -217,26 +201,30 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   // preparation before navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
-    if (segue.identifier == "toLevelSegue") {
-      let cellIndexPath = self.tableView?.indexPath(for: sender as!
-                                                    DeviceTableViewCell)
-      
-      // Get the device.
-      let currDevice:CBPeripheral =
-                self.bleController!.getAvailableDevices()[(cellIndexPath?.row)!]
+    print("In prepareForSegue")
+    if (segue.identifier == "toLevelSegue")
+    {
+      print("Triggered level segue")
       
       // Get the next view controller
       let vc = segue.destination as! ViewController
-      vc.navigationItem.title = currDevice.name
+      vc.navigationItem.title = BLEController.currentDevice!.name
       vc.bleController = self.bleController
       self.bleController?.deviceViewController = vc
-      vc.device = currDevice
+      vc.device = BLEController.currentDevice!
       // Add a back button to the navigation bar
       let backItem = UIBarButtonItem(title: "Devices",
                                      style: .plain,
                                      target: vc,
                                      action: nil)
       navigationItem.backBarButtonItem = backItem
+    }
+    else if (segue.identifier == "toWaitingSegue")
+    {
+      print("Triggered waiting segue")
+      let vc = segue.destination as! WaitingViewController
+      vc.setBLEController(controller: self.bleController!)
+      vc.setDeviceListVC(controller: self)
     }
   }
 

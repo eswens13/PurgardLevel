@@ -72,6 +72,7 @@
                                         <connections>
                                             <outlet property="deviceAddressLabel" destination="0Co-LP-CLd" id="zzR-XR-Z5V"/>
                                             <outlet property="deviceNameLabel" destination="kdN-2A-ztY" id="1Hj-2v-N6P"/>
+                                            <segue destination="Rh4-Z7-rJc" kind="modal" identifier="toWaitingSegue" id="lNw-7c-0kI"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -112,6 +113,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="c18-I3-yXU"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QHi-wl-Rc2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

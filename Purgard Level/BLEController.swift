@@ -238,13 +238,22 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     if (characteristic.isNotifying) {
       DispatchQueue.main.async(execute:
       {
-        self.deviceViewController?.statsView.setConnectionStatus("Connected")
+        if ((self.deviceViewController != nil) &&
+              (self.deviceViewController?.statsView != nil))
+        {
+          self.deviceViewController?.statsView.setConnectionStatus("Connected")
+        }
       })
     }
     else {
       DispatchQueue.main.async(execute:
       {
-        self.deviceViewController?.statsView.setConnectionStatus("Disconnected")
+        if ((self.deviceViewController != nil) &&
+              (self.deviceViewController?.statsView != nil))
+        {
+          self.deviceViewController?.statsView
+                                            .setConnectionStatus("Disconnected")
+        }
       })
     }
   }
@@ -259,50 +268,53 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     }
     else
     {
-      switch characteristic.uuid
+      if (self.deviceViewController != nil)
       {
-      case UUID_CAPSENSE_SLIDER_CHARACTERISTIC:
-        
-        // The level characteristic is an unsigned 8-bit integer. Convert
-        // to an integer and send to view controller.
-        var byte:UInt8 = 0x00
-        (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
-        let intData:Int = Int(byte)
-        DispatchQueue.main.async(execute:
+        switch characteristic.uuid
         {
-          self.deviceViewController!.updateProgress(intData)
-        })
-        break
-        
-      case UUID_VOLTAGE_CHARACTERISTIC:
+        case UUID_CAPSENSE_SLIDER_CHARACTERISTIC:
           
-        // The voltage characteristic is an unsigned 16-bit integer.
-        // Convert to an integer and send to view controller.
-        var byte:UInt8 = 0x00
-        (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
-        let intData:Int = Int(byte)
-        DispatchQueue.main.async(execute:
-        {
-          self.deviceViewController!.updateVoltage(intData)
-        })
-        break
-          
-      case UUID_TEMPERATURE_CHARACTERISTIC:
-          
-        // The temperature characteristic is a signed char in the range
-        // of -127 to 127. It is in celcius, so we have to convert to 
-        // fahrenheit.
-        var byte:UInt8 = 0x00
-        (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
-        let intData:Int = Int(byte)
-        DispatchQueue.main.async(execute:
-        {
-          self.deviceViewController!.updateTemperature(intData)
-        })
-        break
-          
-      default:
+          // The level characteristic is an unsigned 8-bit integer. Convert
+          // to an integer and send to view controller.
+          var byte:UInt8 = 0x00
+          (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
+          let intData:Int = Int(byte)
+          DispatchQueue.main.async(execute:
+          {
+            self.deviceViewController!.updateProgress(intData)
+          })
           break
+          
+        case UUID_VOLTAGE_CHARACTERISTIC:
+            
+          // The voltage characteristic is an unsigned 16-bit integer.
+          // Convert to an integer and send to view controller.
+          var byte:UInt8 = 0x00
+          (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
+          let intData:Int = Int(byte)
+          DispatchQueue.main.async(execute:
+          {
+            self.deviceViewController!.updateVoltage(intData)
+          })
+          break
+            
+        case UUID_TEMPERATURE_CHARACTERISTIC:
+            
+          // The temperature characteristic is a signed char in the range
+          // of -127 to 127. It is in celcius, so we have to convert to 
+          // fahrenheit.
+          var byte:UInt8 = 0x00
+          (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
+          let intData:Int = Int(byte)
+          DispatchQueue.main.async(execute:
+          {
+            self.deviceViewController!.updateTemperature(intData)
+          })
+          break
+            
+        default:
+            break
+        }
       }
     }
   }
