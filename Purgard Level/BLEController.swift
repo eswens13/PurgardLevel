@@ -10,8 +10,8 @@ import CoreBluetooth
 import CoreData
 import UIKit
 
-class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    
+class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
+{    
   // Relevant Services
   let UUID_CAPSENSE_SERVICE =
                       CBUUID(string: "00005AB5-0000-1000-8000-00805F9B34FB")
@@ -33,7 +33,7 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                           CBUUID(string: "00002902-0000-1000-8000-00805F9B34FB")
   
   // The Central Manager for all Bluetooth interactions.
-  var centralManager: CBCentralManager?
+  static var centralManager: CBCentralManager?
   
   // An array of UUIDs for the services we care about.
   var serviceUuids: [CBUUID]?
@@ -51,7 +51,12 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
   var deviceViewController: ViewController?
   
   // A reference to the device that is currently connected.
-  var currentDevice: CBPeripheral?
+  static var currentDevice: CBPeripheral?
+  
+  // Semaphores to signal when we're connected.
+  let levelSem: DispatchSemaphore! = DispatchSemaphore(value: 0)
+  let batterySem: DispatchSemaphore! = DispatchSemaphore(value: 0)
+  let tempSem: DispatchSemaphore! = DispatchSemaphore(value: 0)
   
   // -------------------------------------------------------------------------
   // MARK: Constructor
@@ -67,7 +72,9 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
   {
     super.init()
     
-    centralManager = CBCentralManager(delegate: self, queue: nil)
+    // Instantiate the central manager and make it run on a background dispatch
+    // queue so it doesn't bog down UI operations.
+    BLEController.centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.global(qos: .userInitiated))
     deviceListViewController = listViewController
     serviceUuids = [CBUUID] ()
     characteristicUuids = [CBUUID] ()
@@ -96,26 +103,30 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
   {
     self.availableDevices!.append(peripheral)
     //self.deviceListViewController!.loadView()
-    self.deviceListViewController!.tableView?.reloadData()
+    DispatchQueue.main.async(execute:
+    {
+      self.deviceListViewController!.tableView?.reloadData()
+    })
   }
     
   func centralManager(_ central: CBCentralManager,
                       didConnect peripheral: CBPeripheral)
   {
+    print("CONNECTED")
     // Set the current device as the one we're connected to.
-    self.currentDevice = peripheral
-    self.currentDevice!.delegate = self
+    BLEController.currentDevice = peripheral
+    BLEController.currentDevice!.delegate = self
     
     // Add the device's UUID to the plist.
-    let addResult:Bool =
-          PListWriter.addDevice(UUID: self.currentDevice!.identifier.uuidString)
+    let addResult:Bool = PListWriter.addDevice(
+                UUID: BLEController.currentDevice!.identifier.uuidString)
     if (!addResult)
     {
       print("Didn't add the device to plist!")
     }
     
     // Start discovering the device's services.
-    self.currentDevice?.discoverServices(serviceUuids)
+    BLEController.currentDevice?.discoverServices(serviceUuids)
   }
   
   func centralManager(_ central: CBCentralManager,
@@ -128,8 +139,11 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     else
     {
-      self.deviceViewController?.statsView.setConnectionStatus("Disconnected")
-      self.currentDevice = nil
+      DispatchQueue.main.async(execute:
+      {
+        self.deviceViewController?.statsView.setConnectionStatus("Disconnected")
+      })
+      BLEController.currentDevice = nil
     }
   }
     
@@ -138,14 +152,19 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                       error: Error?)
   {
     // TODO: Show an alert view in the list view controller
-    let alertView = UIAlertController(title: "Connection Failed",
-            message: "Failed to connect to \(peripheral.name!)",
-            preferredStyle: UIAlertControllerStyle.alert)
-    alertView.addAction(
-        UIAlertAction(title: "OK", style: UIAlertActionStyle.default,
-            handler: {(action: UIAlertAction!) in
-            alertView.dismiss(animated: true, completion: nil)
-    }))
+    DispatchQueue.main.async(execute:
+    {
+      let alertView = UIAlertController(
+                            title: "Connection Failed",
+                            message: "Failed to connect to \(peripheral.name!)",
+                            preferredStyle: UIAlertControllerStyle.alert)
+      alertView.addAction(
+          UIAlertAction(title: "OK",
+                        style: UIAlertActionStyle.default,
+                        handler: {(action: UIAlertAction!) in
+                          alertView.dismiss(animated: true, completion: nil)
+                        }))
+    })
   }
   
   // -------------------------------------------------------------------------
@@ -159,14 +178,17 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
       switch service.uuid
       {
       case UUID_CAPSENSE_SERVICE:
+        print("DISCOVERED LEVEL SERVICE")
         peripheral.discoverCharacteristics(
                           [UUID_CAPSENSE_SLIDER_CHARACTERISTIC], for: service)
         break
       case UUID_VOLTAGE_SERVICE:
+        print("DISCOVERED BATTERY SERVICE")
         peripheral.discoverCharacteristics(
                           [UUID_VOLTAGE_CHARACTERISTIC], for: service)
         break
       case UUID_TEMPERATURE_SERVICE:
+        print("DISCOVERED TEMPERATURE SERVICE")
         peripheral.discoverCharacteristics(
                           [UUID_TEMPERATURE_CHARACTERISTIC], for: service)
         break
@@ -185,13 +207,19 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
       switch charac.uuid
       {
       case UUID_CAPSENSE_SLIDER_CHARACTERISTIC:
-        currentDevice!.setNotifyValue(true, for: charac)
+        print("DISCOVERED LEVEL CHAR")
+        BLEController.currentDevice!.setNotifyValue(true, for: charac)
+        levelSem.signal()
         break
       case UUID_TEMPERATURE_CHARACTERISTIC:
-        currentDevice!.setNotifyValue(true, for: charac)
+        print("DISCOVERED TEMPERATURE CHAR")
+        BLEController.currentDevice!.setNotifyValue(true, for: charac)
+        tempSem.signal()
         break
       case UUID_VOLTAGE_CHARACTERISTIC:
-        currentDevice!.setNotifyValue(true, for: charac)
+        print("DISCOVERED BATTERY CHAR")
+        BLEController.currentDevice!.setNotifyValue(true, for: charac)
+        batterySem.signal()
         break
       default:
         break
@@ -208,10 +236,16 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     }
     
     if (characteristic.isNotifying) {
-      deviceViewController?.statsView.setConnectionStatus("Connected")
+      DispatchQueue.main.async(execute:
+      {
+        self.deviceViewController?.statsView.setConnectionStatus("Connected")
+      })
     }
     else {
-      deviceViewController?.statsView.setConnectionStatus("Disconnected")
+      DispatchQueue.main.async(execute:
+      {
+        self.deviceViewController?.statsView.setConnectionStatus("Disconnected")
+      })
     }
   }
     
@@ -234,7 +268,10 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         var byte:UInt8 = 0x00
         (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
         let intData:Int = Int(byte)
-        deviceViewController!.updateProgress(intData)
+        DispatchQueue.main.async(execute:
+        {
+          self.deviceViewController!.updateProgress(intData)
+        })
         break
         
       case UUID_VOLTAGE_CHARACTERISTIC:
@@ -244,7 +281,10 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         var byte:UInt8 = 0x00
         (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
         let intData:Int = Int(byte)
-        deviceViewController!.updateVoltage(intData)
+        DispatchQueue.main.async(execute:
+        {
+          self.deviceViewController!.updateVoltage(intData)
+        })
         break
           
       case UUID_TEMPERATURE_CHARACTERISTIC:
@@ -255,7 +295,10 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         var byte:UInt8 = 0x00
         (characteristic.value as NSData?)?.getBytes(&byte, length: 1)
         let intData:Int = Int(byte)
-        deviceViewController!.updateTemperature(intData)
+        DispatchQueue.main.async(execute:
+        {
+          self.deviceViewController!.updateTemperature(intData)
+        })
         break
           
       default:
@@ -277,34 +320,42 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
   {
     self.availableDevices = [CBPeripheral] ()
     //self.deviceListViewController?.loadView()
-    self.deviceListViewController?.tableView?.reloadData()
-    self.centralManager!.scanForPeripherals(withServices: self.serviceUuids,
-                                            options: nil)
+    DispatchQueue.main.async(execute:
+    {
+      self.deviceListViewController?.tableView?.reloadData()
+    })
+    BLEController.centralManager!.scanForPeripherals(
+                                                withServices: self.serviceUuids,
+                                                options: nil)
   }
   
   func stopScan()
   {
-    self.centralManager!.stopScan()
+    BLEController.centralManager!.stopScan()
   }
   
-  func connectToDevice(_ device: CBPeripheral)
+  static func connectToDevice()
   {
-    self.centralManager!.connect(device, options: nil)
+    print("In connectToDevice")
+    BLEController.centralManager!.connect(BLEController.currentDevice!,
+                                          options: nil)
+    print("Exiting connectToDevice")
   }
   
   func disconnectFromCurrentDevice()
   {
-    if (currentDevice == nil)
+    if (BLEController.currentDevice == nil)
     {
       print("Current device null")
     }
     else
     {
-      for service in (currentDevice?.services)!
+      for service in (BLEController.currentDevice?.services)!
       {
         for characteristic in (service.characteristics)!
         {
-          currentDevice!.setNotifyValue(false, for: characteristic)
+          BLEController.currentDevice!.setNotifyValue(false,
+                                                      for: characteristic)
         }
       }
     
@@ -316,7 +367,8 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
       //                      (currentDevice?.services![0].characteristics![0])!
       //currentDevice!.setNotifyValue(false, for: characteristic)
     
-      self.centralManager!.cancelPeripheralConnection(self.currentDevice!)
+      BLEController.centralManager!.cancelPeripheralConnection(
+                            BLEController.currentDevice!)
     }
   }
     

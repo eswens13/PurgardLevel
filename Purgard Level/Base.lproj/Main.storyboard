@@ -72,7 +72,6 @@
                                         <connections>
                                             <outlet property="deviceAddressLabel" destination="0Co-LP-CLd" id="zzR-XR-Z5V"/>
                                             <outlet property="deviceNameLabel" destination="kdN-2A-ztY" id="1Hj-2v-N6P"/>
-                                            <segue destination="BYZ-38-t0r" kind="push" identifier="toLevelSegue" id="KtW-bQ-wRj"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -93,11 +92,30 @@
                     <navigationItem key="navigationItem" id="1Yx-k8-bV8"/>
                     <connections>
                         <outlet property="tableView" destination="rAR-xc-nxR" id="9gx-LL-LbX"/>
+                        <segue destination="BYZ-38-t0r" kind="push" identifier="toLevelSegue" id="7x0-rB-ZEc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9v4-IM-E0z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="720.5" y="321.5"/>
+        </scene>
+        <!--Waiting View Controller-->
+        <scene sceneID="z95-PX-27n">
+            <objects>
+                <viewController storyboardIdentifier="waitingViewController" id="Rh4-Z7-rJc" customClass="WaitingViewController" customModule="Purgard_Level" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nkF-9X-Rdo"/>
+                        <viewControllerLayoutGuide type="bottom" id="YTn-4v-Ga0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nah-Rq-wuf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QHi-wl-Rc2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1296" y="-124"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -116,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1204.5" y="320.5"/>
+            <point key="canvasLocation" x="1296" y="680"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zPe-Ti-zan">

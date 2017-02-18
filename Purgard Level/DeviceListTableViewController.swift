@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 class DeviceListTableViewController: UIViewController, UITableViewDelegate,
                                      UITableViewDataSource,
@@ -165,6 +166,50 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   {
     return 90
   }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+  {
+    let availableDevices:[CBPeripheral] =
+                                      self.bleController!.getAvailableDevices()
+    if (indexPath.row < availableDevices.count)
+    {
+      let device:CBPeripheral =
+                    (self.bleController?.getAvailableDevices()[indexPath.row])!
+      BLEController.currentDevice = device
+      
+      // Start a thread that will connect to the device.
+      let thread:DispatchQueue = DispatchQueue.global(qos: .userInitiated)
+      thread.async {
+        print("In async thread")
+        BLEController.connectToDevice()
+      }
+      
+      /*
+      let waitingVC:WaitingViewController =
+          self.storyboard?.instantiateViewController(
+              withIdentifier: "waitingViewController") as! WaitingViewController
+      waitingVC.loadView()
+      
+      self.present(waitingVC, animated: true, completion: nil)
+      */
+      
+      print("Waiting on temperature semaphore")
+      self.bleController?.tempSem.wait()
+      print("Waiting on battery semaphore")
+      self.bleController?.batterySem.wait()
+      print("Waiting on level semaphore")
+      self.bleController?.levelSem.wait()
+      print("Done waiting on semaphores")
+      
+      //waitingVC.didFinishWaiting()
+      
+      // Trigger the segue to the detail view.
+      self.performSegue(withIdentifier: "toLevelSegue",
+                        sender: tableView.cellForRow(at: indexPath))
+    }
+    
+    print("Done with didSelectRowAt")
+  }
 
   // MARK: - Navigation
 
@@ -176,15 +221,16 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
       let cellIndexPath = self.tableView?.indexPath(for: sender as!
                                                     DeviceTableViewCell)
       
+      // Get the device.
+      let currDevice:CBPeripheral =
+                self.bleController!.getAvailableDevices()[(cellIndexPath?.row)!]
+      
       // Get the next view controller
       let vc = segue.destination as! ViewController
-      vc.navigationItem.title =
-          self.bleController!.getAvailableDevices()[(cellIndexPath?.row)!].name
+      vc.navigationItem.title = currDevice.name
       vc.bleController = self.bleController
       self.bleController?.deviceViewController = vc
-      vc.device =
-          self.bleController!.getAvailableDevices()[(cellIndexPath?.row)!]
-
+      vc.device = currDevice
       // Add a back button to the navigation bar
       let backItem = UIBarButtonItem(title: "Devices",
                                      style: .plain,

@@ -13,6 +13,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
   var bleController: BLEController?
   var levelView: PurgardLevelView!
+  var purgardView: PurgardView!
   var batteryView: BatteryView!
   var temperatureView: TemperatureView!
   var statsView: PurgardStatsView!
@@ -21,7 +22,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    self.bleController?.connectToDevice(device!)
+    print("In viewDidLoad")
+    
     self.setControlProperties()
   }
     
@@ -60,25 +62,27 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   // Lays out the views in two rows of two.
   func layoutAsPortrait()
   {
-    var navbarHeight:CGFloat
-    if (self.navigationController != nil)
-    {
-      navbarHeight = self.navigationController!.navigationBar.frame.height
-    }
-    else
-    {
-      navbarHeight = 0
-    }
+    var navbarHeight:CGFloat = (self.navigationController?.navigationBar.frame.height)! + UIApplication.shared.statusBarFrame.height
+    
     let width = self.view.bounds.width
     let height = self.view.bounds.height - navbarHeight
     
     // Layout level view
-    let levelRect = CGRect(x: width / 2.0,
+    /*let levelRect = CGRect(x: width / 2.0,
                            y: navbarHeight,
                            width: width / 2.0,
                            height: height / 2.0)
     self.levelView.frame = levelRect
     self.levelView.layoutSubviews()
+    */
+    
+    // Layout the purgard view.
+    let purgardRect = CGRect(x: width / 2.0,
+                             y: navbarHeight,
+                             width: width / 2.0,
+                             height: height / 2.0)
+    self.purgardView.frame = purgardRect
+    self.purgardView.layoutSubviews()
     
     // Layout battery view
     let batteryRect = CGRect(x: 0,
@@ -108,15 +112,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   // Lays out the views in a row of four.
   func layoutAsLandscape()
   {
-    var navbarHeight: CGFloat
-    if (self.navigationController != nil)
-    {
-      navbarHeight = self.navigationController!.navigationBar.frame.height
-    }
-    else
-    {
-      navbarHeight = 0
-    }
+    var navbarHeight: CGFloat = (self.navigationController?.navigationBar.frame.height)! + UIApplication.shared.statusBarFrame.height
+    
     let width = self.view.bounds.width
     let height = self.view.bounds.height - navbarHeight
     
@@ -129,12 +126,21 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     self.statsView.layoutSubviews()
     
     // Layout level view
-    let levelRect = CGRect(x: width / 4.0,
+    /*let levelRect = CGRect(x: width / 4.0,
                            y: navbarHeight,
                            width: width / 4.0,
                            height: height)
     self.levelView.frame = levelRect
     self.levelView.layoutSubviews()
+    */
+    
+    // Layout purgard view
+    let purgardRect = CGRect(x: width / 4.0,
+                             y: navbarHeight,
+                             width: width / 4.0,
+                             height: height)
+    self.purgardView.frame = purgardRect
+    self.purgardView.layoutSubviews()
     
     // Layout battery view
     let batteryRect = CGRect(x: 2.0 * width / 4.0,
@@ -174,11 +180,19 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     self.statsView.setDeviceName("Device: \(self.navigationItem.title!)")
     self.view.addSubview(self.statsView)
     
+    /*
     let levelRect = CGRect(x: 0, y: 0, width: 200, height: 200)
     self.levelView = PurgardLevelView(frame: levelRect)
     self.levelView.translatesAutoresizingMaskIntoConstraints = true
     self.levelView.backgroundColor = UIColor.clear
     self.view.addSubview(self.levelView)
+     */
+    
+    let purgardRect = CGRect(x: 0, y: 0, width: 200, height: 200)
+    self.purgardView = PurgardView(frame: purgardRect)
+    self.purgardView.translatesAutoresizingMaskIntoConstraints = true
+    self.purgardView.backgroundColor = UIColor.clear
+    self.view.addSubview(self.purgardView)
 
     // Set properties for progress view. Default height of the progress bar 
     // is 2.0 so we scale accordingly
@@ -264,12 +278,19 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   {
     if (progress > 100)
     {
-      self.levelView.updateProgress(100)
+      //self.levelView.updateProgress(100)
+      self.purgardView.updateLevel(100)
       self.statsView.setLevel("Level: 100 %")
+    }
+    else if (progress < 0)
+    {
+      self.purgardView.updateLevel(0)
+      self.statsView.setLevel("Level: 0 %")
     }
     else
     {
-      self.levelView.updateProgress(progress)
+      //self.levelView.updateProgress(progress)
+      self.purgardView.updateLevel(progress)
       self.statsView.setLevel("Level: \(progress) %")
     }
   }
@@ -299,7 +320,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
   override func willMove(toParentViewController parent: UIViewController?)
   {
-    if parent == nil && bleController?.currentDevice != nil
+    if parent == nil && BLEController.currentDevice != nil
     {
       bleController!.disconnectFromCurrentDevice()
     }
