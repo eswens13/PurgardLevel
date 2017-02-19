@@ -123,15 +123,15 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     */
     
     // Layout purgard view
-    let purgardRect = CGRect(x: width / 4.0,
+    let purgardRect = CGRect(x: 0,
                              y: navbarHeight,
-                             width: width / 4.0,
+                             width: (3.0 / 4.0) * width,
                              height: height)
     self.purgardView.frame = purgardRect
     self.purgardView.layoutSubviews()
     
     // Layout battery view
-    let batteryRect = CGRect(x: 2.0 * width / 4.0,
+    let batteryRect = CGRect(x: 3.0 * width / 4.0,
                              y: navbarHeight,
                              width: width / 4.0,
                              height: height)
