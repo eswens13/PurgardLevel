@@ -74,7 +74,9 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     
     // Instantiate the central manager and make it run on a background dispatch
     // queue so it doesn't bog down UI operations.
-    BLEController.centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.global(qos: .userInitiated))
+    BLEController.centralManager =
+      CBCentralManager(delegate: self,
+                       queue: DispatchQueue.global(qos: .userInitiated))
     deviceListViewController = listViewController
     serviceUuids = [CBUUID] ()
     characteristicUuids = [CBUUID] ()
@@ -137,10 +139,11 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     }
     else
     {
-      DispatchQueue.main.async(execute:
+      /*DispatchQueue.main.async(execute:
       {
         self.deviceViewController?.statsView.setConnectionStatus("Disconnected")
       })
+      */
       BLEController.currentDevice = nil
     }
   }
@@ -227,8 +230,9 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       print("Error: \(error?.localizedDescription)")
     }
     
-    if (characteristic.isNotifying) {
-      DispatchQueue.main.async(execute:
+    if (characteristic.isNotifying)
+    {
+      /*DispatchQueue.main.async(execute:
       {
         if ((self.deviceViewController != nil) &&
               (self.deviceViewController?.statsView != nil))
@@ -236,9 +240,11 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
           self.deviceViewController?.statsView.setConnectionStatus("Connected")
         }
       })
+      */
     }
-    else {
-      DispatchQueue.main.async(execute:
+    else
+    {
+      /*DispatchQueue.main.async(execute:
       {
         if ((self.deviceViewController != nil) &&
               (self.deviceViewController?.statsView != nil))
@@ -247,6 +253,7 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
                                             .setConnectionStatus("Disconnected")
         }
       })
+      */
     }
   }
     

@@ -11,6 +11,7 @@ import UIKit
 class PurgardView: UIView
 {
   var level:Int = 0
+  var levelLabel: UILabel?
   
   /// General initializer
   override init(frame:CGRect)
@@ -139,6 +140,15 @@ class PurgardView: UIView
                                                height: fillBL.y - fillUL.y))
     fillView.backgroundColor = UIColor.blue
     self.addSubview(fillView)
+    
+    // Add the label
+    self.levelLabel = UILabel(frame: CGRect(x: fillBL.x,
+                                            y: fillBL.y - maxFillHeight,
+                                            width: fillUR.x - fillUL.x,
+                                            height: maxFillHeight))
+    self.levelLabel?.text = "\(self.level) %"
+    self.levelLabel?.textAlignment = .center
+    self.addSubview(self.levelLabel!)
     
     self.setNeedsDisplay()
   }

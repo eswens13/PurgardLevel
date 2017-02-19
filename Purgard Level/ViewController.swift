@@ -12,11 +12,11 @@ import CoreBluetooth
 class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
   var bleController: BLEController?
-  var levelView: PurgardLevelView!
+  //var levelView: PurgardLevelView!
   var purgardView: PurgardView!
   var batteryView: BatteryView!
-  var temperatureView: TemperatureView!
-  var statsView: PurgardStatsView!
+  //var temperatureView: TemperatureView!
+  //var statsView: PurgardStatsView!
   var device: CBPeripheral?
     
   override func viewDidLoad()
@@ -60,59 +60,67 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   // Lays out the views in two rows of two.
   func layoutAsPortrait()
   {
-    var navbarHeight:CGFloat = (self.navigationController?.navigationBar.frame.height)! + UIApplication.shared.statusBarFrame.height
+    var navbarHeight:CGFloat =
+      (self.navigationController?.navigationBar.frame.height)! +
+        UIApplication.shared.statusBarFrame.height
     
     let width = self.view.bounds.width
     let height = self.view.bounds.height - navbarHeight
     
     // Layout the purgard view.
-    let purgardRect = CGRect(x: width / 2.0,
+    let purgardRect = CGRect(x: 0,
                              y: navbarHeight,
-                             width: width / 2.0,
-                             height: height / 2.0)
+                             width: width,
+                             height: (3.0 * height) / 4.0)
     self.purgardView.frame = purgardRect
     self.purgardView.layoutSubviews()
     
     // Layout battery view
     let batteryRect = CGRect(x: 0,
-                             y: (height / 2.0) + navbarHeight,
-                             width: width / 2.0,
-                             height: height / 2.0)
+                             y: ((3.0 * height) / 4.0) + navbarHeight,
+                             width: width,
+                             height: height / 4.0)
     self.batteryView.frame = batteryRect
     self.batteryView.layoutSubviews()
     
     // Layout temperature view
-    let tempRect = CGRect(x: width / 2.0,
+    /*let tempRect = CGRect(x: width / 2.0,
                           y: (height / 2.0) + navbarHeight,
                           width: width / 2.0,
                           height: height / 2.0)
     self.temperatureView.frame = tempRect
     self.temperatureView.layoutSubviews()
+    */
     
     // Layout stats view
-    let statsRect = CGRect(x: 0,
+    /*let statsRect = CGRect(x: 0,
                            y: navbarHeight,
                            width: width / 2.0,
                            height: height / 2.0)
     self.statsView.frame = statsRect
     self.statsView.layoutSubviews()
+    */
   }
     
   // Lays out the views in a row of four.
   func layoutAsLandscape()
   {
-    var navbarHeight: CGFloat = (self.navigationController?.navigationBar.frame.height)! + UIApplication.shared.statusBarFrame.height
+    var navbarHeight: CGFloat =
+      (self.navigationController?.navigationBar.frame.height)! +
+        UIApplication.shared.statusBarFrame.height
     
     let width = self.view.bounds.width
     let height = self.view.bounds.height - navbarHeight
     
     // Layout stats view
+    /*
     let statsRect = CGRect(x: 0,
                            y: navbarHeight,
                            width: width / 4.0,
                            height: height)
     self.statsView.frame = statsRect
     self.statsView.layoutSubviews()
+    */
     
     // Layout purgard view
     let purgardRect = CGRect(x: width / 4.0,
@@ -131,12 +139,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     self.batteryView.layoutSubviews()
     
     // Layout temperature view
-    let tempRect = CGRect(x: 3.0 * width / 4.0,
+    /*let tempRect = CGRect(x: 3.0 * width / 4.0,
                           y: navbarHeight,
                           width: width / 4.0,
                           height: height)
     self.temperatureView.frame = tempRect
     self.temperatureView.layoutSubviews()
+    */
   }
 
   func setControlProperties()
@@ -148,12 +157,14 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     let screenWidth = screenRect.width
     let screenHeight = screenRect.height
     
+    /*
     let statsRect = CGRect(x: 0, y: 0, width: 200, height: 200)
     self.statsView = PurgardStatsView(frame: statsRect)
     self.statsView.translatesAutoresizingMaskIntoConstraints = true
     self.statsView.backgroundColor = UIColor.clear
     self.statsView.setDeviceName("Device: \(self.navigationItem.title!)")
     self.view.addSubview(self.statsView)
+    */
     
     let purgardRect = CGRect(x: 0, y: 0, width: 200, height: 200)
     self.purgardView = PurgardView(frame: purgardRect)
@@ -173,7 +184,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     self.view.addSubview(self.batteryView)
     
     // Add the temperature view
-    let tempRect = CGRect(x: 0,
+    /*let tempRect = CGRect(x: 0,
                           y: 0,
                           width: screenHeight / 6.0,
                           height: screenHeight / 3.0)
@@ -183,6 +194,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     self.temperatureView.backgroundColor = UIColor.clear
     self.temperatureView.updateLevel(0)
     self.view.addSubview(self.temperatureView)
+    */
     
     self.view.layoutSubviews()
   }
@@ -222,20 +234,18 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   {
     if (progress > 100)
     {
-      //self.levelView.updateProgress(100)
       self.purgardView.updateLevel(100)
-      self.statsView.setLevel("Level: 100 %")
+      //self.statsView.setLevel("Level: 100 %")
     }
     else if (progress < 0)
     {
       self.purgardView.updateLevel(0)
-      self.statsView.setLevel("Level: 0 %")
+      //self.statsView.setLevel("Level: 0 %")
     }
     else
     {
-      //self.levelView.updateProgress(progress)
       self.purgardView.updateLevel(progress)
-      self.statsView.setLevel("Level: \(progress) %")
+      //self.statsView.setLevel("Level: \(progress) %")
     }
   }
 
@@ -245,21 +255,23 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     if (voltage > 100)
     {
       self.batteryView.updateLevel(100)
-      self.statsView.setVoltage("Batt: 100 %")
+      //self.statsView.setVoltage("Batt: 100 %")
     }
     else
     {
       self.batteryView.updateLevel(voltage)
-      self.statsView.setVoltage("Batt: \(voltage) %")
+      //self.statsView.setVoltage("Batt: \(voltage) %")
     }
   }
     
   /// Function to update the temperature.
   func updateTemperature(_ temperature: Int)
   {
+    /*
     self.temperatureView.updateLevel(CGFloat(temperature))
     let fahrTemp = ((9.0 / 5.0) * Double(temperature)) + 32.0
     self.statsView.setTemperature("Temp: \(Int(fahrTemp)) \u{00B0}F")
+    */
   }
     
   override func willMove(toParentViewController parent: UIViewController?)

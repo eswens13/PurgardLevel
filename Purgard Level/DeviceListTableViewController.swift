@@ -208,7 +208,8 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
       
       // Start a thread that will connect to the device.
       let thread:DispatchQueue = DispatchQueue.global(qos: .userInitiated)
-      thread.async {
+      thread.async
+      {
         BLEController.connectToDevice()
       }
     }
@@ -222,7 +223,6 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   {
     if (segue.identifier == "toLevelSegue")
     {
- 
       // Get the next view controller and set some of its properties.
       let vc = segue.destination as! ViewController
       vc.navigationItem.title = BLEController.currentDevice!.name
