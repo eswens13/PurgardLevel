@@ -12,6 +12,7 @@ import CoreBluetooth
 class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
   var bleController: BLEController?
+  var tableViewController: DeviceListTableViewController?
   //var levelView: PurgardLevelView!
   var purgardView: PurgardView!
   var batteryView: BatteryView!
@@ -22,7 +23,20 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    let notificationCenter = NotificationCenter.default
+    notificationCenter.addObserver(self,
+                                   selector: #selector(appMovedToBackground),
+                                   name: Notification.Name.UIApplicationWillResignActive,
+                                   object: nil)
     self.setControlProperties()
+  }
+  
+  func appMovedToBackground()
+  {
+    self.tableViewController?.goingToBackground = true
+    navigationController?.popViewController(animated: true)
+    self.bleController!.disconnectFromCurrentDevice()
+    self.dismiss(animated: true, completion: nil)
   }
     
   override func viewDidLayoutSubviews()
@@ -282,6 +296,9 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
   }
     
-
+  func setTableViewController(tableVC: DeviceListTableViewController)
+  {
+    self.tableViewController = tableVC
+  }
 }
 

@@ -18,6 +18,8 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   var activityIndicator: UIActivityIndicatorView?
   
   var cameFromWait:Bool = false
+  var scanning:Bool = false
+  var goingToBackground:Bool = false
   
   // MARK: - Overrides
   
@@ -25,6 +27,17 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    
+    let notificationCenter = NotificationCenter.default
+    notificationCenter.addObserver(self,
+                                   selector: #selector(appMovedToBackground),
+                                   name: Notification.Name.UIApplicationWillResignActive,
+                                   object: nil)
+    
+    notificationCenter.addObserver(self,
+                                   selector: #selector(appMovedToForeground),
+                                   name: Notification.Name.UIApplicationDidBecomeActive,
+                                   object: nil)
 
     self.navigationItem.title = "Available Devices"
     self.bleController = BLEController(listViewController: self)
@@ -49,10 +62,20 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
       cameFromWait = false
       performSegue(withIdentifier: "toLevelSegue", sender: self)
     }
+    else if (goingToBackground)
+    {
+      self.goingToBackground = false
+      self.stopScan()
+    }
     else
     {
       self.scanForDevices()
     }
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.stopScan()
   }
 
   override func didReceiveMemoryWarning()
@@ -89,24 +112,24 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
     self.activityIndicator!.activityIndicatorViewStyle = .gray
     self.activityIndicator!.startAnimating()
     self.navigationController?.view.addSubview(self.activityIndicator!)
-    let timer =
-      Timer.scheduledTimer(timeInterval: TimeInterval(5.0),
-                           target: self,
-                           selector: #selector(DeviceListTableViewController.stopScan),
-                           userInfo: nil,
-                           repeats: false)
+    self.scanning = true
+    
   }
     
   func stopScan()
   {
-    let scanItem =
-      UIBarButtonItem(title: "Scan",
-                      style: .plain,
-                      target: self,
-                      action: #selector(DeviceListTableViewController.scanForDevices))
-    self.navigationItem.rightBarButtonItem = scanItem
-    self.activityIndicator?.removeFromSuperview()
-    self.bleController?.stopScan()
+    if (self.scanning)
+    {
+      self.scanning = false
+      let scanItem =
+        UIBarButtonItem(title: "Scan",
+                        style: .plain,
+                        target: self,
+                        action: #selector(DeviceListTableViewController.scanForDevices))
+      self.navigationItem.rightBarButtonItem = scanItem
+      self.activityIndicator?.removeFromSuperview()
+      self.bleController?.stopScan()
+    }
   }
   
   func addLogoView()
@@ -134,7 +157,22 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
     imageView.image = UIImage(named: "Logo")
     imageView.backgroundColor = UIColor.white
     imageView.contentMode = .scaleAspectFit
+    
+    self.tableView?.frame = CGRect(x: 0,
+                                   y: statusBarHeight + navHeight!,
+                                   width: screenWidth,
+                                   height: screenHeight - viewHeight)
     self.view.addSubview(imageView)
+  }
+  
+  func appMovedToBackground()
+  {
+    self.stopScan()
+  }
+  
+  func appMovedToForeground()
+  {
+    self.scanForDevices()
   }
 
   // MARK: - Table view data source
@@ -225,6 +263,7 @@ class DeviceListTableViewController: UIViewController, UITableViewDelegate,
     {
       // Get the next view controller and set some of its properties.
       let vc = segue.destination as! ViewController
+      vc.setTableViewController(tableVC: self)
       vc.navigationItem.title = BLEController.currentDevice!.name
       vc.bleController = self.bleController
       self.bleController?.deviceViewController = vc

@@ -145,6 +145,7 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       })
       */
       BLEController.currentDevice = nil
+      print("Disconnected from device")
     }
   }
     
@@ -342,6 +343,7 @@ class BLEController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   func stopScan()
   {
     BLEController.centralManager!.stopScan()
+    print("Stopped scanning")
   }
   
   static func connectToDevice()
